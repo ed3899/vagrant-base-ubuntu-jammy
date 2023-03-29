@@ -1,9 +1,6 @@
 # General
 .vagrant/
 
-# Environments
-Rust/
-
 # VS Code Workspace
 *.code-workspace
 

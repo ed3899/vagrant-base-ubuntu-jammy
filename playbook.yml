@@ -8,6 +8,8 @@
         upgrade: yes
         update_cache: yes
         cache_valid_time: 86400 # one day
+  tags:
+  - always
 
 - name: Base dirs
   hosts: all
@@ -27,6 +29,8 @@
         owner: root
         group: root
         mode: 0777
+  tags:
+  - always
 
 - name: Common utilities
   hosts: all
@@ -42,6 +46,8 @@
         - procps
         - file
         - bash-completion
+  tags:
+  - always
 
 - name: Ansible setup
   hosts: all
@@ -54,6 +60,8 @@
       ansible.builtin.apt:
         name: software-properties-common
         update_cache: yes
+  tags:
+  - always
 
 - name: Git setup
   hosts: all
@@ -66,6 +74,8 @@
       ansible.builtin.apt:
         name: git
         update_cache: yes
+  tags:
+  - always
 
 - name: Homebrew installation
   hosts: all
@@ -89,6 +99,8 @@
         path: /home/linuxbrew/.linuxbrew/bin
         name: gcc
       when: homebrew_path_added is succeeded
+  tags:
+  - always
 
 - name: GUI setup
   hosts: all
@@ -121,6 +133,8 @@
         chdir: /ansible_state
         creates: vbox_settings_added.ansible
       when: gui_deps_installed is succeeded
+  tags:
+  - always
 
 - name: Install and setup Docker
   hosts: all
@@ -160,6 +174,8 @@
         name: vagrant
         groups: docker
         append: yes
+  tags:
+  - always
 
 - name: Install AWS Cli
   hosts: all
@@ -188,6 +204,8 @@
         chdir: /downloads
         creates: /downloads/aws/install
       when: aws_cli_downloaded is succeeded and not aws_cli_dir.stat.exists
+  tags:
+  - always
 
 - name: K8s tools
   hosts: all
@@ -205,6 +223,8 @@
       args:
         creates: /etc/bash_completion.d/kubectl
         chdir: /etc/bash_completion.d
+  tags:
+  - always
 
 - name: Minikube setup
   hosts: all
@@ -224,6 +244,8 @@
       args:
         chdir: /downloads
       when: not minikube_dir.stat.exists
+  tags:
+  - always
 
 - name: Starship terminal setup
   hosts: all
@@ -242,4 +264,6 @@
       ansible.builtin.lineinfile:
         path: /home/vagrant/.profile
         line: eval "$(starship init bash)"
+  tags:
+  - always
 
