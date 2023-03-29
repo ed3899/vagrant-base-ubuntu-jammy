@@ -1,0 +1,245 @@
+---
+- name: Update and upgrade
+  hosts: all
+  become: true
+  tasks:
+    - name: Update and upgrade
+      ansible.builtin.apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 # one day
+
+- name: Base dirs
+  hosts: all
+  become: true
+  tasks:
+    - name: Make sure downloads dir exists
+      ansible.builtin.file:
+        path: /downloads
+        state: directory
+        owner: root
+        group: root
+        mode: 0777
+    - name: Make sure ansible_state dir exists
+      ansible.builtin.file:
+        path: /ansible_state
+        state: directory
+        owner: root
+        group: root
+        mode: 0777
+
+- name: Common utilities
+  hosts: all
+  become: true
+  tasks:
+    - name: Update the cache. Make sure general packages are installed
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        update_cache: yes
+      loop:
+        - net-tools
+        - build-essential
+        - procps
+        - file
+        - bash-completion
+
+- name: Ansible setup
+  hosts: all
+  become: true
+  tasks:
+    - name: Add Ansible repo
+      ansible.builtin.apt_repository:
+        repo: ppa:ansible/ansible
+    - name: Install ansible dependency
+      ansible.builtin.apt:
+        name: software-properties-common
+        update_cache: yes
+
+- name: Git setup
+  hosts: all
+  become: true
+  tasks:
+    - name: Add Git repository
+      ansible.builtin.apt_repository:
+        repo: ppa:git-core/ppa
+    - name: Install Git
+      ansible.builtin.apt:
+        name: git
+        update_cache: yes
+
+- name: Homebrew installation
+  hosts: all
+  become: true
+  tasks:
+    - name: Install homebrew
+      become: false
+      ansible.builtin.shell: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      args:
+        creates: /home/linuxbrew
+      register: homebrew_installed
+    - name: Ensure homebrew path is added to .profile
+      ansible.builtin.lineinfile:
+        path: /home/vagrant/.profile
+        line: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+      register: homebrew_path_added
+    - name: Add suggested brew
+      become: false
+      community.general.homebrew:
+        path: /home/linuxbrew/.linuxbrew/bin
+        name: gcc
+      when: homebrew_path_added is succeeded
+
+- name: GUI setup
+  hosts: all
+  become: true
+  tasks:
+    - name: Update the cache. Make sure dependencies needed for GUI are installed.
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        update_cache: yes
+      loop:
+        - xfce4
+        - xfce4-goodies
+        - virtualbox-guest-utils
+        - virtualbox-guest-x11
+      register: gui_deps_installed
+    - name: Allow anybody to launch the GUI
+      ansible.builtin.replace:
+        path: /etc/X11/Xwrapper.config
+        regexp: allowed_users=.*$
+        replace: allowed_users=anybody
+      when: gui_deps_installed is succeeded
+    - name: Setup for VirtualBox GUI client
+      #! Find a way to run it once
+      ansible.builtin.shell: |
+        if !(test -e /ansible_state/vbox_settings_added.ansible)
+        then
+          (VBoxClient-all || (VBoxClient --clipboard && VBoxClient --draganddrop && VBoxClient --display && VBoxClient --checkhostversion && VBoxClient --seamless)) && touch vbox_settings_added.ansible
+        fi
+      args:
+        chdir: /ansible_state
+        creates: vbox_settings_added.ansible
+      when: gui_deps_installed is succeeded
+
+- name: Install and setup Docker
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Docker dependencies
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        update_cache: yes
+      loop:
+        - curl
+        - ca-certificates
+        - gnupg
+    - name: Add Docker's GPG apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+    - name: Add Docker repo to apt (Ubuntu Jammy)
+      ansible.builtin.apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "jammy"
+    - name: Install Docker components
+      ansible.builtin.apt:
+        name: "{{ item }}"
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
+    - name: Ensure docker is active
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+    - name: Ensure Docker group exists
+      user:
+        name: vagrant
+        groups: docker
+        append: yes
+
+- name: Install AWS Cli
+  hosts: all
+  become: true
+  tasks:
+    - name: Get /usr/local/aws-cli stats
+      ansible.builtin.stat:
+        path: /usr/local/aws-cli
+      register: aws_cli_dir
+    - name: Make sure AWS dependencies are present
+      ansible.builtin.apt:
+        name: "{{ item }}"
+      loop:
+        - groff
+        - less
+    - name: Download AWS Cli
+      ansible.builtin.shell: |
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      args:
+        chdir: /downloads
+        creates: awscliv2.zip
+      register: aws_cli_downloaded
+    - name: Install AWS Cli
+      ansible.builtin.shell: unzip -u awscliv2.zip && ./aws/install
+      args:
+        chdir: /downloads
+        creates: /downloads/aws/install
+      when: aws_cli_downloaded is succeeded and not aws_cli_dir.stat.exists
+
+- name: K8s tools
+  hosts: all
+  become: true
+  tasks:
+    - name: Install kubectl
+      community.general.snap:
+        name:
+          - kubectl
+        classic: true
+    - name: Add kubectl autocompletion to bash
+      ansible.builtin.shell: |
+        kubectl completion bash | sudo tee kubectl > /dev/null
+        chmod a+r kubectl
+      args:
+        creates: /etc/bash_completion.d/kubectl
+        chdir: /etc/bash_completion.d
+
+- name: Minikube setup
+  hosts: all
+  become: true
+  tasks:
+    - name: Get stats of /usr/local/bin/minikube
+      ansible.builtin.stat:
+        path: /usr/local/bin/minikube
+      register: minikube_dir
+    - name: Download minikube binary
+      ansible.builtin.shell: curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+      args:
+        creates: /downloads/minikube-linux-amd64
+        chdir: /downloads
+    - name: Install minukube
+      ansible.builtin.shell: install minikube-linux-amd64 /usr/local/bin/minikube
+      args:
+        chdir: /downloads
+      when: not minikube_dir.stat.exists
+
+- name: Starship terminal setup
+  hosts: all
+  become: true
+  tasks:
+    - name: Make sure FiraCode font package is present
+      ansible.builtin.apt:
+        name: fonts-firacode
+        update_cache: yes
+    - name: Install starship
+      become: false
+      community.general.homebrew:
+        name: starship
+      register: starship_installed
+    - name: Ensure starship is present on .profile
+      ansible.builtin.lineinfile:
+        path: /home/vagrant/.profile
+        line: eval "$(starship init bash)"
+
