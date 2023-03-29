@@ -267,3 +267,5 @@
   tags:
   - always
 
+- name: Rust set up
+  ansible.builtin.import_playbook: ansible/playbooks/rust.yml

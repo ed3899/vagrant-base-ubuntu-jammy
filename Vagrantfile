@@ -1,10 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-class VagrantPlugins::ProviderVirtualBox::Action::Network
-  def dhcp_server_matches_config?(dhcp_server, config)
-    true
-  end
-end
+# class VagrantPlugins::ProviderVirtualBox::Action::Network
+#   def dhcp_server_matches_config?(dhcp_server, config)
+#     true
+#   end
+# end
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
@@ -21,6 +21,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.post_up_message = "Ubuntu Jammy64 up and ready"
 
+  config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant"
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -31,6 +33,7 @@ Vagrant.configure("2") do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
   config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.usable_port_range = 8000..8999
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
@@ -72,6 +75,6 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "init.sh"
 
   config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "playbook.yml"
+    ansible.playbook = "ansible/playbooks/base.yml"
   end
 end
