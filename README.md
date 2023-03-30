@@ -20,6 +20,13 @@ On the *Vagrantfile*, look for:
 Change that according to the environment you wish to run. List of
 environments in the Vagrantfile
 
+### .gitignore
+Vagrant syncs the root folder with the VM. Make sure you add
+your source project folder name on `.gitignore` to avoid any conflicts
+with this repo.
+
+By default it is called **src/**
+
 ### Run
 Once you've made your changes.
 
@@ -35,6 +42,11 @@ Once done:
 You should be able to ssh into the machine.
 
 ## Troubleshooting
+
+### Firewall issues while downloading the box
+Please refer to this [thread](https://stackoverflow.com/questions/72290594/unknown-error-0x80092012-trying-to-configure-vagrant-with-git-bash/75837342#75837342) where it is explained in detail.
+
+If you want a quick and dirty fix, disable your firewall or antivirus.
 
 ### Windows
 If you want to change the default location where Vagrant stores
@@ -57,11 +69,6 @@ Variable value: D:/Example/Location'`
 Reboot your host machine
 
 This is important if you have limited space on your default hard drive.
-
-### Firewall issues while downloading the box
-Please refer to this [thread](https://stackoverflow.com/questions/72290594/unknown-error-0x80092012-trying-to-configure-vagrant-with-git-bash/75837342#75837342) where it is explained in detail.
-
-If you want a quick and dirty fix, disable your firewall or antivirus.
 
 ### Virtual Box
 If you're using VirtualBox as a provider make sure you change
