@@ -4,5 +4,8 @@
 # VS Code Workspace
 *.code-workspace
 
+# Main project
+src/
+
 # Log files (if you are creating logs in debug mode, uncomment this)
 # *.log

@@ -10,6 +10,7 @@
         cache_valid_time: 86400 # one day
   tags:
   - always
+  - debug
 
 - name: Base dirs
   hosts: all
@@ -31,6 +32,7 @@
         mode: 0777
   tags:
   - always
+  - debug
 
 - name: Common utilities
   hosts: all
@@ -48,6 +50,7 @@
         - bash-completion
   tags:
   - always
+  - debug
 
 - name: Ansible setup
   hosts: all
@@ -62,7 +65,7 @@
         update_cache: yes
   tags:
   - always
-
+  - debug
 - name: Git setup
   hosts: all
   become: true
@@ -74,9 +77,26 @@
       ansible.builtin.apt:
         name: git
         update_cache: yes
+    - name: Git config
+      community.general.git_config:
+        name: user.name
+        scope: system
+        value: "{{ git.username }}"
+      loop:
+        - {
+            name: "user.name",
+            scope: "system",
+            value: "{{ git.username }}"
+          }
+        - {
+            name: "user.email",
+            scope: "system",
+            value: "{{ git.email }}"
+          }
   tags:
   - always
-
+  - debug
+  
 - name: Homebrew installation
   hosts: all
   become: true
@@ -87,18 +107,15 @@
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       args:
         creates: /home/linuxbrew
-      register: homebrew_installed
     - name: Ensure homebrew path is added to .profile
       ansible.builtin.lineinfile:
         path: /home/vagrant/.profile
         line: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-      register: homebrew_path_added
     - name: Add suggested brew
       become: false
       community.general.homebrew:
         path: /home/linuxbrew/.linuxbrew/bin
         name: gcc
-      when: homebrew_path_added is succeeded
   tags:
   - always
 
@@ -115,13 +132,11 @@
         - xfce4-goodies
         - virtualbox-guest-utils
         - virtualbox-guest-x11
-      register: gui_deps_installed
     - name: Allow anybody to launch the GUI
       ansible.builtin.replace:
         path: /etc/X11/Xwrapper.config
         regexp: allowed_users=.*$
         replace: allowed_users=anybody
-      when: gui_deps_installed is succeeded
     - name: Setup for VirtualBox GUI client
       #! Find a way to run it once
       ansible.builtin.shell: |
@@ -132,7 +147,6 @@
       args:
         chdir: /ansible_state
         creates: vbox_settings_added.ansible
-      when: gui_deps_installed is succeeded
   tags:
   - always
 
@@ -197,13 +211,12 @@
       args:
         chdir: /downloads
         creates: awscliv2.zip
-      register: aws_cli_downloaded
     - name: Install AWS Cli
       ansible.builtin.shell: unzip -u awscliv2.zip && ./aws/install
       args:
         chdir: /downloads
         creates: /downloads/aws/install
-      when: aws_cli_downloaded is succeeded and not aws_cli_dir.stat.exists
+      when: not aws_cli_dir.stat.exists
   tags:
   - always
 
@@ -259,7 +272,6 @@
       become: false
       community.general.homebrew:
         name: starship
-      register: starship_installed
     - name: Ensure starship is present on .profile
       ansible.builtin.lineinfile:
         path: /home/vagrant/.profile
@@ -268,4 +280,6 @@
   - always
 
 - name: Rust set up
-  ansible.builtin.import_playbook: ansible/playbooks/rust.yml
+  ansible.builtin.import_playbook: rust.yml
+  tags:
+  - rust

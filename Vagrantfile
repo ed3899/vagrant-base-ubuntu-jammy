@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
-  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
   config.vm.usable_port_range = 8000..8999
 
   # Create a forwarded port mapping which allows access to a specific port
@@ -59,6 +59,8 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
+    # VM name
+    vb.name = "ubuntu_jammy64"
     # Customize the amount of memory on the VM:
     vb.memory = "2048"
 
@@ -76,5 +78,14 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "ansible/playbooks/base.yml"
+    ansible.extra_vars = "ansible/vars/main.yml"
+    # # The task name where the playbook execution will start.
+    # ansible.start_at_task = "task_name"
+
+    #! Change me accordingly
+    # Options:
+    # - rust
+    # - debug (run specific plays, add this accordingly)
+    ansible.tags = ["rust", "debug"]
   end
 end
