@@ -14,7 +14,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/jammy64"
   config.vm.post_up_message = "Ubuntu Jammy64 up and ready"
   config.vm.synced_folder "./ansible", "/vagrant", owner: "vagrant", group: "vagrant"
-  config.vm.synced_folder "./src", "/home/vagrant/src", owner: "vagrant", group: "vagrant", create: true
+  # Additional folders
+  # config.vm.synced_folder "./src", "/home/vagrant/src", owner: "vagrant", group: "vagrant", create: true
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
