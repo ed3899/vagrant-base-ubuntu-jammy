@@ -1,11 +1,40 @@
-# Vagrant Base Image
-This is the base image for local development work. The Dockerfile is
-only meant to be run in a production environment.
+# Overview
+This is the base Vagrant image for local development work.
+It uses Ubuntu Jammy64, provisions with ansible and
+provides with VirtualBox
 
-## Overview
-Using Ubuntu Jammy, provisioning with ansible and providing with VirtualBox
+## Requirements
+- Make sure you have Vagrant installed on the host machine
+- Enough space on your default drive (see below if you want to change the location where
+  Vagrant stores its boxes and VirtualBox the built VMs)
 
-## Setup
+## How-To
+Before running make sure you select the adequate environment
+you wish to run.
+
+### Environments
+On the *Vagrantfile*, look for:
+
+`ansible.tags = ["tag_of_the_environment"]`
+
+Change that according to the environment you wish to run. List of
+environments in the Vagrantfile
+
+### Run
+Once you've made your changes.
+
+Make sure you are at the root of the project where the
+Vagrantfile is located.
+
+On your command line:
+`vagrant up`
+
+Once done:
+`vagrant ssh`
+
+You should be able to ssh into the machine.
+
+## Troubleshooting
 
 ### Windows
 If you want to change the default location where Vagrant stores
@@ -18,12 +47,12 @@ This will only change the environment variable per terminal session.
 
 If you wish to change it system wide then go to:
 
-Home > Edit the System Environment Variables (admin password prompmt required) > Environment Variables > System Variables > New
+`Home > Edit the System Environment Variables (admin password prompmt required) > Environment Variables > System Variables > New`
 
 Then set the values accordingly
 
-Variable name: VAGRANT_HOME
-Variable value: D:/Example/Location'
+`Variable name: VAGRANT_HOME
+Variable value: D:/Example/Location'`
 
 Reboot your host machine
 
@@ -44,13 +73,3 @@ Select the dropdown **Default Machine Folder** and choose your
 custom location
 
 This is important if you have limited space on your default hard drive.
-
-## Environments
-On the *Vagrantfile*, look for:
-
-`ansible.tags = ["tag_of_the_environment"]`
-
-Change that according to the environment you wish to run.
-
-## Rust
-`ansible.tags = ["rust"]`
