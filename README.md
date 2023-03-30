@@ -9,16 +9,16 @@ provides with VirtualBox
   Vagrant stores its boxes and VirtualBox the built VMs)
 
 ## How-To
-Before running make sure you select the adequate environment
+Before running make sure you select the adequate tags
 you wish to run.
 
-### Plays
+### Tags
 On the *Vagrantfile*, look for:
 
 `ansible.tags = ["tag_of_the_play"]`
 
-Change that according to the plays you wish to run. List of
-plays in the Vagrantfile.
+Change that according to the tags you wish to run. List of
+tags in the Vagrantfile. Each play on ansible maps to a single tag.
 
 #### AWS
 If using the **aws** tag.
@@ -35,9 +35,6 @@ aws:
   region: us-west-2
   output: json
 ```
-
-And add: `ansible.extra_vars = "ansible/secrets/main.yml"` to
-the Vagrantfile under `config.vm.provision`
 
 This file is ignored by git
 
