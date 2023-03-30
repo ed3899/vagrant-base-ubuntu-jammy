@@ -77,7 +77,7 @@ This will only change the environment variable per terminal session.
 
 If you wish to change it system wide then go to:
 
-`Home > Edit the System Environment Variables (admin password prompmt required) > Environment Variables > System Variables > New`
+*Home > Edit the System Environment Variables (admin password prompmt required) > Environment Variables > System Variables > New*
 
 Then set the values accordingly
 
