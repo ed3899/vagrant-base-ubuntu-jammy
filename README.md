@@ -12,13 +12,34 @@ provides with VirtualBox
 Before running make sure you select the adequate environment
 you wish to run.
 
-### Environments
+### Plays
 On the *Vagrantfile*, look for:
 
-`ansible.tags = ["tag_of_the_environment"]`
+`ansible.tags = ["tag_of_the_play"]`
 
-Change that according to the environment you wish to run. List of
-environments in the Vagrantfile
+Change that according to the plays you wish to run. List of
+plays in the Vagrantfile.
+
+#### AWS
+If using the **aws** tag.
+
+Create:
+
+`ansible\playbooks\secrets\main.yml`
+
+With values:
+```
+aws:
+  access_key_id: aws_test
+  secret_access_key: aws_test
+  region: us-west-2
+  output: json
+```
+
+And add: `ansible.extra_vars = "ansible/secrets/main.yml"` to
+the Vagrantfile under `config.vm.provision`
+
+This file is ignored by git
 
 ### .gitignore
 Vagrant syncs the root folder with the VM. Make sure you add
@@ -51,9 +72,9 @@ If you want a quick and dirty fix, disable your firewall or antivirus.
 ### Windows
 If you want to change the default location where Vagrant stores
 the boxes . Run the following on CMD or Powershell. By default is stores them
-on *C:/Users/USERNAME/.vagrant.d/boxes*
+on *C:\Users\USERNAME\.vagrant.d\boxes*
 
-`Set-Item Env:VAGRANT_HOME 'D:/Example/Location'`
+`Set-Item Env:VAGRANT_HOME 'D:\Example\Location'`
 
 This will only change the environment variable per terminal session.
 
@@ -63,8 +84,10 @@ If you wish to change it system wide then go to:
 
 Then set the values accordingly
 
-`Variable name: VAGRANT_HOME
-Variable value: D:/Example/Location'`
+```
+Variable name: VAGRANT_HOME
+Variable value: D:\Example\Location'
+```
 
 Reboot your host machine
 
@@ -74,7 +97,7 @@ This is important if you have limited space on your default hard drive.
 If you're using VirtualBox as a provider make sure you change
 the default location where it stores the VMs.
 
-*File > Preferences*
+**File > Preferences**
 
 Select the dropdown **Default Machine Folder** and choose your
 custom location

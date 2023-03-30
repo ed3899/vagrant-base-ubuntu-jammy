@@ -1,10 +1,18 @@
 ---
-- name: Rust setup
+- name: Rust
   hosts: all
   become: false
   tasks:
+    - name: Get stats of rust bin
+      ansible.builtin.stat:
+        path: /home/vagrant/.cargo/bin
+      register: rustbin_dir
     - name: Install rustup-init
       community.general.homebrew:
         name: rustup-init
+      register: rustupinit_installed
+    - name: Install rust and components
+      ansible.builtin.shell: rustup-init -y --profile complete
+      when: not rustbin_dir.stat.exists and rustupinit_installed is succeeded
   tags:
   - rust

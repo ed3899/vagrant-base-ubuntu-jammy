@@ -78,14 +78,18 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "ansible/playbooks/base.yml"
-    ansible.extra_vars = "ansible/vars/main.yml"
-    # # The task name where the playbook execution will start.
-    # ansible.start_at_task = "task_name"
 
-    #! Change me accordingly
-    # Options:
-    # - rust
-    # - debug (run specific plays, add this accordingly)
-    ansible.tags = ["rust", "debug"]
+    # Comment out accordingly
+    ansible.tags = [
+      "git",
+      # "brew",
+      # "gui",
+      # "docker",
+      "aws",
+      # "k8s",
+      # "minikube",
+      # "starship",
+      "rust",
+    ]
   end
 end

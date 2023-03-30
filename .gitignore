@@ -4,6 +4,9 @@
 # VS Code Workspace
 *.code-workspace
 
+# Sensite information
+ansible/secrets/
+
 # Main project
 src/
 
