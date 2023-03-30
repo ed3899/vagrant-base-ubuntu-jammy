@@ -10,8 +10,8 @@ provides with VirtualBox
 
 ## How-To
 
-### Shared folder
-Make sure you shared the additionals folder you would like to have
+### Shared folders
+Make sure you shared the additionals folders you would like to have
 in sync with the VM
 
 Add those to .gitignore to avoid conflicting repo issues
