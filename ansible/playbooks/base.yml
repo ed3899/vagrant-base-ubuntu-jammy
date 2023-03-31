@@ -45,6 +45,7 @@
         - procps
         - file
         - bash-completion
+        - tree
   tags:
   - always
 
