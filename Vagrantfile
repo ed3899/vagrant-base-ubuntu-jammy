@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   config.vm.post_up_message = "Ubuntu Jammy64 up and ready"
   config.vm.synced_folder "./ansible", "/vagrant", owner: "vagrant", group: "vagrant"
   # Additional folders
-  # config.vm.synced_folder "./src", "/home/vagrant/src", owner: "vagrant", group: "vagrant", create: true
+  config.vm.synced_folder "./project", "/home/vagrant/project", owner: "vagrant", group: "vagrant", create: true
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
@@ -33,18 +33,18 @@ Vagrant.configure("2") do |config|
     vb.cpus = "2"
   end
   config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "ansible/playbooks/base.yml"
+    ansible.playbook = "playbooks/base.yml"
     # Comment out accordingly
     ansible.tags = [
-      # "git",
-      # "brew",
-      # "gui",
-      # "docker",
-      # "aws",
-      # "k8s",
-      # "minikube",
-      # "starship",
-      # "rust",
+      "git",
+      "brew",
+      "gui",
+      "docker",
+      "aws",
+      "k8s",
+      "minikube",
+      "starship",
+      "rust",
     ]
   end
 end
