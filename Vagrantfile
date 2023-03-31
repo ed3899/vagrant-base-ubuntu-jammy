@@ -36,15 +36,16 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "playbooks/base.yml"
     # Comment out accordingly
     ansible.tags = [
-      "git",
-      "brew",
-      "gui",
-      "docker",
-      "aws",
-      "k8s",
-      "minikube",
-      "starship",
-      "rust",
+      # "git",
+      "github",
+      # "brew",
+      # "gui",
+      # "docker",
+      # "aws",
+      # "k8s",
+      # "minikube",
+      # "starship",
+      # "rust",
     ]
   end
 end
