@@ -139,6 +139,12 @@
             scope: "system",
             value: "!git add -A && git commit -m 'chore: savepoint'"
           }
+          # Amend last commit
+        - {
+            name: "alias.cma",
+            scope: "system",
+            value: "commit --amend"
+          }
           # The following alias will roll all of your commit changes back into the local unstaged area, so you can make modifications and add them to the staging area (often referred to as the index).
         - {
             name: "alias.undo",
