@@ -27,18 +27,34 @@ On the *Vagrantfile*, look for:
 Change that according to the tags you wish to run. List of
 tags in the Vagrantfile. Each play on ansible maps to a single tag.
 
+### GitHub
+If using the **github** tag.
+
+Create or fill:
+
+`ansible\playbooks\secrets\main.yml`
+
+With values:
+```
+github:
+  tokens:
+    personal_access_token_classic: YOUR_TOKEN
+```
+
+This file is ignored by git
+
 #### AWS
 If using the **aws** tag.
 
-Create:
+Create or fill:
 
 `ansible\playbooks\secrets\main.yml`
 
 With values:
 ```
 aws:
-  access_key_id: aws_test
-  secret_access_key: aws_test
+  access_key_id: YOUR_KEY
+  secret_access_key: YOUR_SECRET_KEY
   region: us-west-2
   output: json
 ```

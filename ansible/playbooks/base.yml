@@ -119,16 +119,29 @@
         user: vagrant
         key: "{{ lookup('file', '/home/vagrant/.ssh/github.pub') }}"
       when: github_pubkey_added is succeeded
+    # - name: Add ssh-agent setup script to ~/.profile
+    #   ansible.builtin.shell: |
+    #     exec ssh-agent bash
+    #     ssh-add {{ github_ssh_key_pair.filename }}
+    #     touch /ansible_state/github_key_added
+    #   args:
+    #     creates: /ansible_state/github_key_added
     - name: Add ssh-agent setup script to ~/.profile
-      ansible.builtin.lineinfile:
+      ansible.builtin.blockinfile:
         path: /home/vagrant/.profile
-        line: "{{ item }}"
-      loop:
-        - "# Start ssh-agent and add the github pub key"
-        - 'eval "$(ssh-agent -s)" > /dev/null'
-        - "ssh-add {{ github_ssh_key_pair.filename }} > /dev/null"
-        - "# Test connection to github"
-        - "ssh -T git@github.com"
+        block: |
+          # Add github to ssh-agent
+          if [ -z "$SSH_AUTH_SOCK" ] ; then
+            # Start ssh-agent
+            eval `ssh-agent -s`
+            # Add the github pub key
+            ssh-add {{ github_ssh_key_pair.filename }}
+            # Test connection to github
+            ssh -T git@github.com
+            # Kill the agent
+            eval `ssh-agent -k`
+          fi
+        backup: true
   tags:
   - github
 
@@ -267,6 +280,7 @@
         - "[default]"
         - "aws_access_key_id={{ aws.access_key_id }}"
         - "aws_secret_access_key={{ aws.secret_access_key }}"
+      no_log: true
       when: awscli_installed is succeeded
     - name: Ensure AWS config is present
       ansible.builtin.lineinfile:
