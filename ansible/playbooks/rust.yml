@@ -13,6 +13,8 @@
       register: rustupinit_installed
     - name: Install rust and components
       ansible.builtin.shell: rustup-init -y --profile complete
+      args:
+        chdir: /home/linuxbrew/.linuxbrew/bin
       when: not rustbin_dir.stat.exists and rustupinit_installed is succeeded
   tags:
   - rust

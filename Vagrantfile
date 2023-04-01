@@ -38,8 +38,8 @@ Vagrant.configure("2") do |config|
     ansible.provisioning_path = "/vagrant"
     # Comment out accordingly
     ansible.tags = [
-      # "git",
-      "github",
+      "git",
+      # "github",
       # "brew",
       # "gui",
       # "docker",
@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
       # "k8s",
       # "minikube",
       # "starship",
-      # "rust",
+      "rust",
     ]
   end
 end
