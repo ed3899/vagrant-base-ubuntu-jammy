@@ -119,29 +119,13 @@
         user: vagrant
         key: "{{ lookup('file', '/home/vagrant/.ssh/github.pub') }}"
       when: github_pubkey_added is succeeded
-    # - name: Add ssh-agent setup script to ~/.profile
-    #   ansible.builtin.shell: |
-    #     exec ssh-agent bash
-    #     ssh-add {{ github_ssh_key_pair.filename }}
-    #     touch /ansible_state/github_key_added
-    #   args:
-    #     creates: /ansible_state/github_key_added
-    - name: Add ssh-agent setup script to ~/.profile
-      ansible.builtin.blockinfile:
-        path: /home/vagrant/.profile
-        block: |
-          # Add github to ssh-agent
-          if [ -z "$SSH_AUTH_SOCK" ] ; then
-            # Start ssh-agent
-            eval `ssh-agent -s`
-            # Add the github pub key
-            ssh-add {{ github_ssh_key_pair.filename }}
-            # Test connection to github
-            ssh -T git@github.com
-            # Kill the agent
-            eval `ssh-agent -k`
-          fi
-        backup: true
+    - name: Add host to ssh_config
+      community.general.ssh_config:
+        host: github.com
+        hostname: github.com
+        user: vagrant
+        identity_file: "{{ github_ssh_key_pair.filename }}"
+      when: github_pubkey_added is succeeded
   tags:
   - github
 
