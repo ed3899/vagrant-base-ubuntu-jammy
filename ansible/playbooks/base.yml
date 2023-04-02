@@ -164,6 +164,11 @@
             scope: "system",
             value: "!git push origin HEAD"
           }
+        - {
+            name: "alias.donefl",
+            scope: "system",
+            value: "!git push origin HEAD --force-with-lease"
+          }
           # Git log
         - {
             name: "alias.lg",
