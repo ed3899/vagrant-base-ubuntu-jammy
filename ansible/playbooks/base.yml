@@ -74,8 +74,10 @@
         repo: ppa:git-core/ppa
     - name: Install git
       ansible.builtin.apt:
-        name: git
+        name: "{{ item }}"
         update_cache: yes
+      loop:
+        - git
     - name: Git config
       community.general.git_config:
         name: "{{ item.name }}"
@@ -173,7 +175,7 @@
         - {
             name: "alias.lg",
             scope: "system",
-            value: "!git log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30"
+            value: "!git log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30 --stat"
           }
           # Lists all configured remote repositories
         - {
