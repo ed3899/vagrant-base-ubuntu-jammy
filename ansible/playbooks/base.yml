@@ -122,6 +122,12 @@
         - {
             name: "alias.del",
             scope: "system",
+            value: "branch -d"
+          }
+          # Forcibly delete branch
+        - {
+            name: "alias.delfrc",
+            scope: "system",
             value: "branch -D"
           }
           # List all branches
@@ -177,6 +183,22 @@
             scope: "system",
             value: "!git log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30 --stat"
           }
+          # Git log merge conflict
+          # Shows only commits related to files that produced a conflict
+          # Displays < if the commit was from the “left” side of the merge (“our” version, the one you started with), or > if the commit was from the “right” side of the merge (“their” version, the one you’re merging in
+          # Can also provide the file name to be more specific
+          # git log --merge --left-right -p hello
+        - {
+            name: "alias.lgm",
+            scope: "system",
+            value: "!git log --pretty -30 --stat --merge --left-right -p"
+          }
+          # Display graph topology with all branches
+        - {
+            name: "alias.graph",
+            scope: "system",
+            value: "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)' --all --full-history"
+          }
           # Lists all configured remote repositories
         - {
             name: "alias.rv",
@@ -226,7 +248,7 @@
         - {
             name: "alias.stls",
             scope: "system",
-            value: "stash save"
+            value: "stash list"
           }
           # Stash pop
         - {
