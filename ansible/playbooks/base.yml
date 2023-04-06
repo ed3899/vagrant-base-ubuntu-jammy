@@ -265,6 +265,20 @@
             scope: "system",
             value: "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)' --all --full-history"
           }
+          # Display orphaned commits
+        - {
+            name: "alias.orphanl",
+            scope: "system",
+            value: "!git log --pretty=oneline --abbrev-commit --graph --decorate `git reflog | cut -c1-7`"
+          }
+          # Display history of a file
+          # git log --oneline --follow FILE_NAME
+          # git log --oneline -- OLD_FILE_NAME
+        - {
+            name: "alias.fileh",
+            scope: "system",
+            value: "!git log --oneline --follow"
+          }
           # Lists all configured remote repositories
         - {
             name: "alias.rv",
