@@ -147,6 +147,11 @@
             scope: "system",
             value: "vi"
           }
+        - {
+            name: "alias.gaa",
+            scope: "system",
+            value: "!git config --get-regexp alias"
+          }
           # Do you often run a git status command? I do! Use the following git alias to have a shortcut for it:
         - {
             name: "alias.s",
