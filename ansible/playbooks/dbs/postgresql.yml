@@ -41,6 +41,13 @@
       community.postgresql.postgresql_db:
         name: vagrant
       when: psycop2_installed is succeeded
+    - name: Grant the right permissions for db access
+      community.postgresql.postgresql_pg_hba:
+        dest: /etc/postgresql/15/main/pg_hba.conf
+        contype: local
+        method: trust
+        create: true
+        backup: true
     - name: Start and enable services
       ansible.builtin.service:
         name: postgresql
