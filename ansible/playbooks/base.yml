@@ -601,3 +601,8 @@
   ansible.builtin.import_playbook: rust.yml
   tags:
   - rust
+
+- name: PostgreSQL
+  ansible.builtin.import_playbook: ./dbs/postgresql.yml
+  tags:
+  - pg

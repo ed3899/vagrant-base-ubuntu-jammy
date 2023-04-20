@@ -3,6 +3,7 @@
 
 # VS Code Workspace
 *.code-workspace
+/.vscode
 
 # Sensite information
 ansible/secrets/

@@ -1,0 +1,48 @@
+- name: Set up PostgreSQL
+  hosts: all
+  become: true
+  tasks:
+    - name: Import the repo signing key
+      ansible.builtin.apt_key:
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    - name: Add pg repository
+      ansible.builtin.apt_repository:
+        repo: deb http://apt.postgresql.org/pub/repos/apt jammy-pgdg main
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "jammy"
+    - name: Install pg
+      ansible.builtin.apt:
+        name: postgresql
+        update_cache: yes
+    - name: Additional dependencies
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        update_cache: yes
+      loop:
+        - python3-pip
+        - libpq-dev
+        - python3-setuptools
+      register: pg_deps
+    - name: Install psycopg2
+      ansible.builtin.pip:
+        name: psycopg2
+      when: pg_deps is succeeded
+      register: psycop2_installed
+    - name: Add pg user
+      become_user: postgres
+      community.postgresql.postgresql_user:
+        name: vagrant
+    - name: Create vagrant db
+      become_user: postgres
+      community.postgresql.postgresql_db:
+        name: vagrant
+      when: psycop2_installed is succeeded
+    - name: Start and enable services
+      ansible.builtin.service:
+        name: postgresql
+        state: started
+        enabled: yes
+  handlers:
+    - name: Restart postgres
+      ansible.builtin.service:
+        name: postgresql
+        state: restarted
