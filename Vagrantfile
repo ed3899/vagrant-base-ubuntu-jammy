@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
-  config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+  config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: true
   config.vm.usable_port_range = 8000..8999
   # Create a private network, which allows host-only access to the machine.
   config.vm.network "private_network", type: "dhcp", netmask: "255.255.255.0", dhcp_ip:"192.168.56.100", dhcp_lower: "192.168.56.101", dhcp_upper: "192.168.56.254"
@@ -29,9 +29,9 @@ Vagrant.configure("2") do |config|
     # VM name
     vb.name = "ubuntu_jammy64"
     # Customize the amount of memory on the VM:
-    vb.memory = "2048"
+    vb.memory = "4096"
     # Virtual CPUs
-    vb.cpus = "2"
+    vb.cpus = "4"
   end
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "playbooks/base.yml"
@@ -47,8 +47,8 @@ Vagrant.configure("2") do |config|
       # "k8s",
       # "minikube",
       # "starship",
-      # "rust",
-      "pg"
+      "rust",
+      # "pg"
     ]
   end
 end
