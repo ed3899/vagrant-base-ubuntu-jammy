@@ -94,6 +94,7 @@
         - file
         - bash-completion
         - tree
+        - netcat
   tags:
   - always
 
