@@ -1,0 +1,9 @@
+---
+- name: Go
+  hosts: all
+  become: true
+  tasks:
+    - name: Install go
+      community.general.snap:
+        name: go
+        classic: true

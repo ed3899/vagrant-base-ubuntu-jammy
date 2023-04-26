@@ -599,9 +599,14 @@
   - starship
 
 - name: Rust
-  ansible.builtin.import_playbook: rust.yml
+  ansible.builtin.import_playbook: ./programming_languages/rust.yml
   tags:
   - rust
+
+- name: Go
+  ansible.builtin.import_playbook: ./programming_languages/go.yml
+  tags:
+  - go
 
 - name: PostgreSQL
   ansible.builtin.import_playbook: ./dbs/postgresql.yml

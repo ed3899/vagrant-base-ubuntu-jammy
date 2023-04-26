@@ -48,7 +48,8 @@ Vagrant.configure("2") do |config|
       # "minikube",
       # "starship",
       "rust",
-      # "pg"
+      "go",
+      # "pg",
     ]
   end
 end
