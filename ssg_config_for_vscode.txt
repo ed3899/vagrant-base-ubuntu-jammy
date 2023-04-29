@@ -1,0 +1,11 @@
+Host vagrant_ubuntujammy64
+  HostName 127.0.0.1
+  User vagrant
+  Port 2222
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile "D:/Documents/Virtual Machines/Ubuntu/Jammy64/.vagrant/machines/default/virtualbox/private_key"
+  IdentitiesOnly yes
+  LogLevel FATAL
+
