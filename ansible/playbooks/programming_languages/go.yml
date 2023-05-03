@@ -7,3 +7,9 @@
       community.general.snap:
         name: go
         classic: true
+    - name: Set go bin path
+      ansible.builtin.lineinfile:
+        path: /home/vagrant/.profile
+        backup: true
+        create: true
+        line: PATH=$PATH:/home/vagrant/go/bin
