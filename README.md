@@ -89,7 +89,7 @@ Please refer to this [thread](https://stackoverflow.com/questions/72290594/unkno
 
 If you want a quick and dirty fix, disable your firewall or antivirus.
 
-### Windows
+### Change location where Vagrant stores boxes on Windows
 If you want to change the default location where Vagrant stores
 the boxes . Run the following on CMD or Powershell. By default is stores them
 on *C:\Users\USERNAME\.vagrant.d\boxes*
@@ -113,7 +113,7 @@ Reboot your host machine
 
 This is important if you have limited space on your default hard drive.
 
-### Virtual Box
+### Change location where VirtualBox stores VMs on Windows
 If you're using VirtualBox as a provider make sure you change
 the default location where it stores the VMs.
 
