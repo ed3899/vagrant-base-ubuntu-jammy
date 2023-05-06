@@ -1,7 +1,7 @@
 - name: Git
   hosts: all
   vars_files:
-    - "../vars/main.yml"
+    - "../../vars/main.yml"
   become: true
   tasks:
     - name: Add Git repository
