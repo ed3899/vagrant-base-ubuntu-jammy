@@ -16,16 +16,17 @@ Vagrant.configure("2") do |config|
   config.vm.post_up_message = "Ubuntu Jammy64 up and ready"
   # Sharing this folder is required as per provisioning via ansible
   config.vm.synced_folder "./ansible", "/vagrant", owner: "vagrant", group: "vagrant"
-  # Optional folders below. Sharing folders like this gives you the freedom to
-  # edit the files even when the VM is not booted. Meaning that they are linked
-  # from your host
-  # Just log in via `vagrant ssh` and do your work.
-  #
-  # If you're working with the Remote SSH extension on VSCode
-  # this won't be neccessary.
-  # However, you may only access your folders once the VM is up and running.
-  # It is up to the dev experience you want.
-  config.vm.synced_folder "./project", "/home/vagrant/project", owner: "vagrant", group: "vagrant", create: true
+  # # Optional folders below. Sharing folders like this gives you the freedom to
+  # # edit the files even when the VM is not booted. Meaning that they are linked
+  # # from your host
+  # # Just log in via `vagrant ssh` and do your work.
+  # #
+  # # If you're working with the Remote SSH extension on VSCode
+  # # this won't be neccessary.
+  # # However, you may only access your folders once the VM is up and running.
+  # # It is up to the dev experience you want.
+  # config.vm.synced_folder "./project", "/home/vagrant/project", owner: "vagrant", group: "vagrant", create: true
+
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
@@ -47,17 +48,23 @@ Vagrant.configure("2") do |config|
     ansible.provisioning_path = "/vagrant"
     # Comment out accordingly
     ansible.tags = [
+      #? Tools
+      # "brew",
+      # "starship",
+      # "gui",
+      #? VC
       # "git",
       # "github",
-      # "brew",
-      # "gui",
+      #? Containers
       # "docker",
-      # "aws",
-      # "k8s",
       # "minikube",
-      # "starship",
-      "rust",
-      "go",
+      # "k8s",
+      #? Cloud
+      # "aws",
+      #? Programming languages
+      # "rust",
+      # "go",
+      #? Dbs
       # "pg",
     ]
   end
