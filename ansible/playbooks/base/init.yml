@@ -1,0 +1,17 @@
+- name: Up and upgrade
+  ansible.builtin.import_playbook: ./linux_aliases.yml
+
+- name: Base dirs
+  ansible.builtin.import_playbook: ./base_dirs.yml
+
+- name: Linux aliases
+  ansible.builtin.import_playbook: ./linux_aliases.yml
+
+- name: Common utils
+  ansible.builtin.import_playbook: ./common_utils.yml
+
+- name: Ansible
+  ansible.builtin.import_playbook: ./ansible.yml
+
+- name: Homebrew
+  ansible.builtin.import_playbook: ./homebrew.yml

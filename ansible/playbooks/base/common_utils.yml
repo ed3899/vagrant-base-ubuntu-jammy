@@ -1,0 +1,16 @@
+- name: Common utilities
+  hosts: all
+  become: true
+  tasks:
+    - name: Update the cache. Make sure general packages are present
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        update_cache: yes
+      loop:
+        - net-tools
+        - build-essential
+        - procps
+        - file
+        - bash-completion
+        - tree
+        - netcat
