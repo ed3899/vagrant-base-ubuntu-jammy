@@ -43,6 +43,11 @@ github:
 
 This file is ignored by git
 
+Make sure you remove your old keys from GitHub when you destroy your VMs. This is done automatically once you remove your expired personal access tokens.
+
+[GitHub_Personal_Access_Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+
+Make sure to give the right permissions to the token as well (i.e "repo", "admin:public_key" are the minimum). For more granular control consult the docs.
 #### AWS
 If using the **aws** tag.
 
