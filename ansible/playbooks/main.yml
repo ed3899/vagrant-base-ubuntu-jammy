@@ -1,0 +1,56 @@
+#! Base
+- name: Base
+  ansible.builtin.import_playbook: ./base/init.yml
+  tags:
+  - always
+## Cloud providers
+- name: AWS
+  ansible.builtin.import_playbook: ./cloud_providers/aws_cli.yml
+  tags:
+  - aws
+## Container tools
+- name: Docker
+  ansible.builtin.import_playbook: ./container_tools/docker.yml
+  tags:
+  - docker
+- name: K8s tools
+  ansible.builtin.import_playbook: ./container_tools/k8s_tools.yml
+  tags:
+  - k8s_tools
+- name: Minikube
+  ansible.builtin.import_playbook: ./container_tools/minikube.yml
+  tags:
+  - minikube
+## Dbs
+- name: PostgreSQL
+  ansible.builtin.import_playbook: ./dbs/postgresql.yml
+  tags:
+  - pg
+## Programming languages
+- name: Go
+  ansible.builtin.import_playbook: ./programming_languages/go.yml
+  tags:
+  - go
+- name: Rust
+  ansible.builtin.import_playbook: ./programming_languages/rust.yml
+  tags:
+  - rust
+## Terminal
+- name: Starship
+  ansible.builtin.import_playbook: ./terminal/starship.yml
+  tags:
+  - starship
+## UI
+- name: Git
+  ansible.builtin.import_playbook: ./ui/gui.yml
+  tags:
+  - gui
+## Vc
+- name: Git
+  ansible.builtin.import_playbook: ./vc/git.yml
+  tags:
+  - git
+- name: GitHub
+  ansible.builtin.import_playbook: ./vc/git_hub.yml
+  tags:
+  - github
