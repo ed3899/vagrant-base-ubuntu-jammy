@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/jammy64"
   config.vm.post_up_message = "Ubuntu Jammy64 up and ready"
-  # Sharing this folder is required as per provisioning via ansible
+  # Sharing this folder is required as per provisioning via ansible locally
   config.vm.synced_folder "./ansible", "/vagrant", owner: "vagrant", group: "vagrant"
   # # Optional folders below. Sharing folders like this gives you the freedom to
   # # edit the files even when the VM is not booted. Meaning that they are linked
@@ -34,38 +34,46 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: true
   config.vm.usable_port_range = 8000..8999
   # Create a private network, which allows host-only access to the machine.
+  # Feel free to comment this out if you don't need public reachability from your
+  # host machine
   config.vm.network "private_network", type: "dhcp", netmask: "255.255.255.0", dhcp_ip:"192.168.56.100", dhcp_lower: "192.168.56.101", dhcp_upper: "192.168.56.254"
+  # VirtualBox customizations
   config.vm.provider "virtualbox" do |vb|
     # VM name
-    vb.name = "ubuntu_jammy64"
+    vb.name = "ubuntu_jammy64_dev"
     # Customize the amount of memory on the VM:
     vb.memory = "4096"
     # Virtual CPUs
     vb.cpus = "4"
   end
   config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "playbooks/base.yml"
+    ansible.playbook = "playbooks/main.yml"
     ansible.provisioning_path = "/vagrant"
-    # Comment out accordingly
+    #! Comment out accordingly.
+    #! By default A TAG HAS TO BE ENABLED
+    # Otherwise it defaults to executing all of them.
+    # Under the hood, there's a base file that always runs regardless.
+    #
+    # The order doesn't matter here.
     ansible.tags = [
-      #? Tools
-      # "brew",
-      # "starship",
-      # "gui",
-      #? VC
-      # "git",
-      # "github",
-      #? Containers
-      # "docker",
-      # "minikube",
-      # "k8s",
-      #? Cloud
+      #? Cloud providers
       # "aws",
-      #? Programming languages
-      # "rust",
-      # "go",
+      #? Container tools
+      # "docker",
+      # "k8s_tools",
+      # "minikube",
       #? Dbs
       # "pg",
+      #? Programming languages
+      # "go",
+      # "rust",
+      #? Terminal
+      # "starship",
+      #? UI
+      # "gui",
+      #? Vc
+      "git",
+      # "github",
     ]
   end
 end
