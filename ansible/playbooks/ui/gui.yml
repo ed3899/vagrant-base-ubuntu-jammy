@@ -1,0 +1,27 @@
+- name: GUI
+  hosts: all
+  become: true
+  tasks:
+    - name: Update the cache. Make sure dependencies needed for GUI are installed.
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        update_cache: yes
+      loop:
+        - xfce4
+        - xfce4-goodies
+        - virtualbox-guest-utils
+        - virtualbox-guest-x11
+    - name: Allow anybody to launch the GUI
+      ansible.builtin.replace:
+        path: /etc/X11/Xwrapper.config
+        regexp: allowed_users=.*$
+        replace: allowed_users=anybody
+    - name: Setup for VirtualBox GUI client
+      ansible.builtin.shell: |
+        if !(test -e /ansible_state/vbox_settings_added.ansible)
+        then
+          (VBoxClient-all || (VBoxClient --clipboard && VBoxClient --draganddrop && VBoxClient --display && VBoxClient --checkhostversion && VBoxClient --seamless)) && touch vbox_settings_added.ansible
+        fi
+      args:
+        chdir: /ansible_state
+        creates: vbox_settings_added.ansible
