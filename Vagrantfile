@@ -66,13 +66,14 @@ Vagrant.configure("2") do |config|
       # "pg",
       #? Programming languages
       # "go",
+      # "python",
       # "rust",
       #? Terminal
       # "starship",
       #? UI
       # "gui",
       #? Vc
-      "git",
+      # "git",
       # "github",
     ]
   end

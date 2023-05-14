@@ -31,6 +31,10 @@
   ansible.builtin.import_playbook: ./programming_languages/go.yml
   tags:
   - go
+- name: Python
+  ansible.builtin.import_playbook: ./programming_languages/python.yml
+  tags:
+  - python
 - name: Rust
   ansible.builtin.import_playbook: ./programming_languages/rust.yml
   tags:
