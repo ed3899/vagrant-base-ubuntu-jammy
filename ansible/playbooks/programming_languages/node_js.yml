@@ -1,0 +1,18 @@
+- name: NodeJS
+  hosts: all
+  become: true
+  become_user: vagrant
+  tasks:
+      # Manage multiple node versions
+      # https://github.com/nvm-sh/nvm
+    - name: Install nvm
+      ansible.builtin.shell: >
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+      args:
+        creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    - name: Nvm bash autocompletion
+      ansible.builtin.lineinfile:
+        path:  "{{ ansible_env.HOME }}/.bashrc"
+        backup: true
+        line: >
+          [[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion

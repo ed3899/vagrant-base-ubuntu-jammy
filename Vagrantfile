@@ -66,6 +66,7 @@ Vagrant.configure("2") do |config|
       # "pg",
       #? Programming languages
       # "go",
+      # "node_js",
       # "python",
       # "rust",
       #? Terminal
