@@ -17,6 +17,11 @@
           become_user: root
       vars:
         mysql_root_password: my-secret-pw
+        mysql_users:
+          - name: vagrant
+            host: "%"
+            password: my-secret-pw
+            priv: "*.*:ALL"
   post_tasks:
     - name: Start service mysql, if not started
       ansible.builtin.service:
