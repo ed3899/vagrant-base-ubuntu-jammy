@@ -63,6 +63,7 @@ Vagrant.configure("2") do |config|
       # "k8s_tools",
       # "minikube",
       #? Dbs
+      # "mysql",
       # "pg",
       #? Programming languages
       # "go",

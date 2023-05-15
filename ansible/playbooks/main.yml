@@ -22,6 +22,10 @@
   tags:
   - minikube
 ## Dbs
+- name: MySQL
+  ansible.builtin.import_playbook: ./dbs/mysql.yml
+  tags:
+  - mysql
 - name: PostgreSQL
   ansible.builtin.import_playbook: ./dbs/postgresql.yml
   tags:
