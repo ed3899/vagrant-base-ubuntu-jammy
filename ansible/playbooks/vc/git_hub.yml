@@ -15,7 +15,6 @@
         name: access_key_for_local_vagrant_dev
         token: "{{ github.tokens.personal_access_token_classic }}"
         pubkey: "{{ github_ssh_key_pair.public_key }}"
-      # no_log: true
       register: github_pubkey_added
       when: github_ssh_key_pair is succeeded
     - name: Authorize GitHub public key
