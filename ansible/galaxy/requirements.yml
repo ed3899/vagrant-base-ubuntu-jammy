@@ -1,0 +1,7 @@
+- name: community.mysql
+  src: https://github.com/ansible-collections/community.mysql
+  version: 3.7.1
+
+- name: geerlingguy.mysql
+  src: https://github.com/geerlingguy/ansible-role-mysql
+  version: 4.3.2

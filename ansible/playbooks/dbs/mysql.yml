@@ -2,12 +2,7 @@
   hosts: all
   become: true
   become_user: vagrant
-  # Source: https://github.com/geerlingguy/ansible-role-mysql
-  pre_tasks:
-    - name: Install "geerlingguy.mysql" role
-      community.general.ansible_galaxy_install:
-        type: role
-        name: geerlingguy.mysql
+  # Roles included in Vagrant set up.
   tasks:
     - name: Include "geerlingguy.mysql" role
       ansible.builtin.include_role:
