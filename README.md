@@ -3,38 +3,47 @@ This is the base Vagrant image for local development work.
 It uses Ubuntu Jammy64, provisions with ansible and
 provides with VirtualBox
 
-## Requirements
+# Requirements
 - Make sure you have Vagrant installed on the host machine
 - Enough space on your default drive (see below if you want to change the location where
   Vagrant stores its boxes and VirtualBox the built VMs)
 
-## How-To
+# How-To
 
-### Shared folders
+## Share folders
 Make sure you shared the additionals folders you would like to have
-in sync with the VM
+in sync with the VM with the following line:
 
-Add those to .gitignore to avoid conflicting repo issues
 
-### Tags
+```
+config.vm.synced_folder "./HOST/FOLDER", "/GUEST/FOLDER", owner: "vagrant", group: "vagrant", create: true
+```
+
+Be mindful of sharing folder with initialized git repositories. If you decide to fork and make changes to this repository some of those may conflict with children repos.
+
+Add those to the `.gitignore` file of this repo to avoid conflicting repo issues with the children.
+
+Or you can set them as git sub-modules.
+
+## Tags
 Before running make sure you select the adequate tags
 you wish to run.
 
-On the *Vagrantfile*, look for:
+On the `Vagrantfile`, look for:
 
 `ansible.tags = ["tag_of_the_play"]`
 
-Change that according to the tags you wish to run. List of
-tags in the Vagrantfile. Each play on ansible maps to a single tag.
+Change that according to the tags you wish to run. Each tag maps to an ansible play. The order you pick doesn't matter.
 
 ### GitHub
-If using the **github** tag.
+If using the `github` tag.
 
 Create or fill:
 
 `ansible\playbooks\secrets\main.yml`
 
 With values:
+
 ```
 github:
   tokens:
@@ -45,17 +54,18 @@ This file is ignored by git
 
 Make sure you remove your old keys from GitHub when you destroy your VMs. This is done automatically once you remove your expired personal access tokens.
 
-[GitHub_Personal_Access_Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-
 Make sure to give the right permissions to the token as well (i.e "repo", "admin:public_key" are the minimum). For more granular control consult the docs.
-#### AWS
-If using the **aws** tag.
+
+[GitHub_Personal_Access_Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+### AWS
+If using the `aws` tag.
 
 Create or fill:
 
 `ansible\playbooks\secrets\main.yml`
 
 With values:
+
 ```
 aws:
   access_key_id: YOUR_KEY
@@ -66,26 +76,47 @@ aws:
 
 This file is ignored by git
 
-### .gitignore
-Vagrant syncs the root folder with the VM. Make sure you add
-your source project folder name on `.gitignore` to avoid any conflicts
-with this repo.
-
-By default it is called **src/**
-
-### Run
+## Run
 Once you've made your changes.
 
 Make sure you are at the root of the project where the
 Vagrantfile is located.
 
 On your command line:
+
 `vagrant up`
 
 Once done:
+
 `vagrant ssh`
 
+## Using VS Code Remote SSH Extension
+Run `vagrant ssh-config > some-file.txt`. This will generate a file with the configuration to run using SSH. Here an example of that file:
+
+```
+Host default
+  HostName 127.0.0.1
+  User vagrant
+  Port 2222
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile C:/Users/User/project/.vagrant/machines/default/virtualbox/private_key
+  IdentitiesOnly yes
+  LogLevel FATAL
+  ForwardAgent yes
+  ForwardX11 yes
+```
+
+Notice that the `HostName` is default, you could rename it to whatever you want so you could identify it more easily.
+
+Copy the content of `some-file.txt` inside your SSH configuration file. This file could be edit directly from vscode by pressing F1 and writing Remote-SSH: Open Configuration File..., then you select the file you use for ssh configuration. After that file opens, just copy the content of some-file.txt there.
+
+Finally, just press again F1 and type Remote-SSH: Connect to Host..., choose the connection with the `HostName` default or the want you wrote in the first step, and that's all.
+
 You should be able to ssh into the machine.
+
+[Stack OverFlow Source](https://stackoverflow.com/a/62200336/11941146)
 
 ## Troubleshooting
 
@@ -97,7 +128,7 @@ If you want a quick and dirty fix, disable your firewall or antivirus.
 ### Change location where Vagrant stores boxes on Windows
 If you want to change the default location where Vagrant stores
 the boxes . Run the following on CMD or Powershell. By default is stores them
-on *C:\Users\USERNAME\.vagrant.d\boxes*
+on `C:\Users\USERNAME\.vagrant.d\boxes`
 
 `Set-Item Env:VAGRANT_HOME 'D:\Example\Location'`
 
@@ -107,7 +138,7 @@ If you wish to change it system wide then go to:
 
 *Home > Edit the System Environment Variables (admin password prompt required) > Environment Variables > System Variables > New*
 
-Then set the values accordingly
+Then set the values accordingly:
 
 ```
 Variable name: VAGRANT_HOME
