@@ -56,6 +56,7 @@ This file is ignored by git
 
 ### Postgres
 All postgreSQL tags have the following available users and database:
+
 ```
 user: postgres
 password: postgres
