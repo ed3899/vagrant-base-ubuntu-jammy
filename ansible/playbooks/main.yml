@@ -3,6 +3,7 @@
   ansible.builtin.import_playbook: ./base/init.yml
   tags:
   - always
+  - init
 ## Cloud providers
 - name: AWS
   ansible.builtin.import_playbook: ./cloud_providers/aws_cli.yml
@@ -26,10 +27,11 @@
   ansible.builtin.import_playbook: ./dbs/mysql.yml
   tags:
   - mysql
-- name: PostgreSQL
-  ansible.builtin.import_playbook: ./dbs/postgresql.yml
+##% PostgreSQL
+- name: PostgreSQL 15
+  ansible.builtin.import_playbook: ./dbs/postgreSQL/15/install.yml
   tags:
-  - pg
+  - pg-15
 ## Programming languages
 - name: Go
   ansible.builtin.import_playbook: ./programming_languages/go.yml

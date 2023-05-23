@@ -76,6 +76,13 @@ aws:
 
 This file is ignored by git
 
+## Skip Tags
+
+### Always, Init
+Comment these out if you would like to test quick changes without running base setup again.
+
+Or feel free to place here tags you have already ran.
+
 ## Run
 Once you've made your changes.
 

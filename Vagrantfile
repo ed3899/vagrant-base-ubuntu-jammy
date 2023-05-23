@@ -20,6 +20,10 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "playbooks/main.yml"
     ansible.provisioning_path = "/ansible"
     ansible.galaxy_role_file = "/ansible/galaxy/requirements.yml"
+    # ansible.skip_tags = [
+    #   "always",
+    #   "init",
+    # ]
     ansible.tags = [
       #? Cloud providers
       # "aws",
@@ -29,7 +33,7 @@ Vagrant.configure("2") do |config|
       # "minikube",
       #? Dbs
       # "mysql",
-      # "pg",
+      "pg-15",
       #? Programming languages
       # "go",
       # "node_js",
