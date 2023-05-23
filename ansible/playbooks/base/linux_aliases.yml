@@ -23,6 +23,7 @@
           alias now='date +"%T"'
           alias nowtime=now
           alias nowdate='date +"%d-%m-%Y"'
+          alias getusers='cut -d: -f1 /etc/passwd'
           ## Stop after sending count ECHO_REQUEST packets #
           alias ping='ping -c 5'
           ## Do not wait interval 1 second, go fast #
