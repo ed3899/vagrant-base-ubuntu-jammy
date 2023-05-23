@@ -35,6 +35,35 @@ On the `Vagrantfile`, look for:
 
 Change that according to the tags you wish to run. Each tag maps to an ansible play. The order you pick doesn't matter.
 
+### AWS
+If using the `aws` tag.
+
+Create or fill:
+
+`ansible\playbooks\secrets\main.yml`
+
+With values:
+
+```
+aws:
+  access_key_id: YOUR_KEY
+  secret_access_key: YOUR_SECRET_KEY
+  region: us-west-2
+  output: json
+```
+
+This file is ignored by git
+
+### Postgres
+All postgreSQL tags have the following available users and database:
+```
+user: postgres
+password: postgres
+database: vagrant
+```
+
+For security reasons, if you want to interact with your database from a VSCode extension, make sure you've got a (Private Network)[https://developer.hashicorp.com/vagrant/docs/networking/private_network] on Vagrant between the host and the guest.
+
 ### GitHub
 If using the `github` tag.
 
@@ -57,24 +86,6 @@ Make sure you remove your old keys from GitHub when you destroy your VMs. This i
 Make sure to give the right permissions to the token as well (i.e "repo", "admin:public_key" are the minimum). For more granular control consult the docs.
 
 [GitHub_Personal_Access_Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-### AWS
-If using the `aws` tag.
-
-Create or fill:
-
-`ansible\playbooks\secrets\main.yml`
-
-With values:
-
-```
-aws:
-  access_key_id: YOUR_KEY
-  secret_access_key: YOUR_SECRET_KEY
-  region: us-west-2
-  output: json
-```
-
-This file is ignored by git
 
 ## Skip Tags
 
