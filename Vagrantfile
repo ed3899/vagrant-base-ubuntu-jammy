@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
       # "minikube",
       #? Dbs
       # "mysql",
-      "pg-15",
+      # "pg-15",
       #? Programming languages
       # "go",
       # "node_js",
