@@ -1,3 +1,6 @@
+- name: Python for ansible setup
+  ansible.builtin.import_playbook: ./python_for_ansible.yml
+
 - name: Up and upgrade
   ansible.builtin.import_playbook: ./linux_aliases.yml
 

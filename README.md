@@ -9,7 +9,7 @@ provides with VirtualBox
   Vagrant stores its boxes and VirtualBox the built VMs)
 
 # How-To
-
+Before running, make sure to read the following sections.
 ## Share folders
 Make sure you shared the additionals folders you would like to have
 in sync with the VM with the following line:
@@ -53,6 +53,11 @@ aws:
 ```
 
 This file is ignored by git
+
+### Python
+In order to manage multiple python versions add them to `~/ansible/playbooks/programming_languages/python.yml` in the `vars` section. This ensures a stateful presence between provisioning and decommisioning.
+
+Or feel free to add them with the `update-alternatives` command. (Click here for a tutorial)[https://tellor.io/blog/how-to-install-python-3-9-and-venv-on-ubuntu/]
 
 ### Postgres
 All postgreSQL tags have the following available users and database:

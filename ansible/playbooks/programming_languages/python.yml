@@ -2,9 +2,17 @@
   hosts: all
   become: true
   vars:
+  # Check and select your available versions with:
+  # sudo update-alternatives --config python3
+  #
+  # Ensure the state is set to present as not to interfere
+  # with the default needed version for ansible provisioning
+  # The version automatically changes back to the factory version
+  # after every provisioning
+  #
+  # When you and a new version make sure to keep descending priority numbers
     python_versions:
-      python3.11: { priority: 3, state: selected }
-      python3.10: { priority: 2, state: present }
+      python3.11: { priority: 2, state: present }
       python3.9: { priority: 1, state: present }
   pre_tasks:
     # For other versions of Ubuntu (e.g. 22.04), you may need the deadsnakes ppa to install some python versions
