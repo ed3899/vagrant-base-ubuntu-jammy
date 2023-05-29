@@ -1,29 +1,56 @@
 - name: Python
   hosts: all
   become: true
+  vars:
+    python_versions:
+      python3.11: { priority: 3, state: selected }
+      python3.10: { priority: 2, state: present }
+      python3.9: { priority: 1, state: present }
+  pre_tasks:
+    # For other versions of Ubuntu (e.g. 22.04), you may need the deadsnakes ppa to install some python versions
+    - name: Add deadsnakes repo
+      ansible.builtin.apt_repository:
+        repo: ppa:deadsnakes/ppa
   tasks:
-    # Manage python versions
-    # https://github.com/pyenv/pyenv
-    - name: Install pyenv
-      become: false
-      community.general.homebrew:
-        name: pyenv
-    - name: Setup shell environment for pyenv
-      ansible.builtin.blockinfile:
-        path: /home/vagrant/.profile
-        backup: true
-        block: |
-          export PYENV_ROOT="$HOME/.pyenv"
-          command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-          eval "$($(which pyenv) init -)"
-    # Manage python virtual envs
-    # https://github.com/pyenv/pyenv-virtualenv
-    - name: Install pyenv-virtualenv plugin
-      become: false
-      community.general.homebrew:
-        name: pyenv-virtualenv
-    - name: Setup shell environment for pyenv-virtualenv
+    - name: Install python versions
+      ansible.builtin.apt:
+        name: "{{ item.key }}"
+        update_cache: yes
+      loop: "{{ python_versions | dict2items }}"
+    - name: Install pipenv dependencies
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        update_cache: yes
+      loop:
+        - python3-pip
+        - python3-venv
+    - name: Install setuptools
+      ansible.builtin.pip:
+        name: setuptools
+    # https://packaging.python.org/en/latest/tutorials/managing-dependencies/
+    - name: Install pipenv (Package manager)
+      become: true
+      become_user: vagrant
+      ansible.builtin.pip:
+        name: pipenv
+        extra_args: --user
+    - name: Ensure pipenv is on PATH
       ansible.builtin.lineinfile:
         path: /home/vagrant/.profile
         backup: true
-        line: eval "$($(which pyenv) virtualenv-init -)"
+        create: true
+        line: export PATH=$PATH:/home/vagrant/.local/bin
+  post_tasks:
+    # There is no fully functional Python version manager for Linux as of now, like pyenv for MacoS or Windows.
+    # Most of them are still on experimental support. The best way so far is to use the built-in tools Linux
+    # provides us to handle that.
+    # To manage python alternatives use the built-in "update-alternatives" command
+    # https://tellor.io/blog/how-to-install-python-3-9-and-venv-on-ubuntu/
+    - name: Set python3 alternatives
+      community.general.alternatives:
+        name: python3
+        link: /usr/bin/python3
+        path: "/usr/bin/{{ item.key }}"
+        priority: "{{ item.value.priority }}"
+        state: "{{ item.value.state }}"
+      loop: "{{ python_versions | dict2items }}"
