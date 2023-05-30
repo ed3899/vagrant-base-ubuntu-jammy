@@ -36,6 +36,9 @@
       ansible.builtin.pip:
         name: setuptools
     # https://packaging.python.org/en/latest/tutorials/managing-dependencies/
+    # This only install pip env for the default version.
+    # To install per version
+    # python3 -m pip install --user pipenv
     - name: Install pipenv (Package manager)
       become: true
       become_user: vagrant
