@@ -1,0 +1,48 @@
+- name: Python Anaconda
+  hosts: all
+  become: true
+  pre_tasks:
+    # For other versions of Ubuntu (e.g. 22.04), you may need the deadsnakes ppa to install some python versions
+    - name: Add deadsnakes repo
+      ansible.builtin.apt_repository:
+        repo: ppa:deadsnakes/ppa
+    # The version below may change depending on the Anaconda version
+    # See the docs in the link below:
+    # https://www.anaconda.com/download#downloads
+    # https://www.digitalocean.com/community/tutorials/how-to-install-the-anaconda-python-distribution-on-ubuntu-20-04
+    - name: Ensure needed python version for Anaconda3 is present
+      ansible.builtin.apt:
+        name: python3.10
+        update_cache: yes
+    - name: Download Anaconda3 installer
+      ansible.builtin.command:
+        chdir: /downloads
+        cmd: curl https://repo.anaconda.com/archive/Anaconda3-2023.03-1-Linux-x86_64.sh --output anaconda.sh
+        creates: anaconda.sh
+    - name: Make the installer executable
+      ansible.builtin.file:
+        path: /downloads/anaconda.sh
+        mode: 0777
+        owner: root
+        group: root
+    - name: Output the hash checksum to a file
+      ansible.builtin.shell:
+        chdir: /downloads
+        cmd: sha256sum anaconda.sh > anaconda_checksum.txt
+        creates: anaconda_checksum.txt
+  tasks:
+    - name: Install Anaconda3
+      ansible.builtin.shell:
+        chdir: /downloads
+        cmd: ./anaconda.sh -b -p /home/vagrant/anaconda3
+        creates: /home/vagrant/anaconda3/condabin/conda
+  post_tasks:
+    - name: Add condabin to path
+      ansible.builtin.lineinfile:
+        path: "/home/vagrant/{{ item }}"
+        line: export PATH=$PATH:/home/vagrant/anaconda3/condabin
+        create: true
+        backup: true
+      loop:
+        - .profile
+        - .bashrc

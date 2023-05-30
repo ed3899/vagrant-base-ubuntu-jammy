@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
       #? Programming languages
       # "go",
       # "node_js",
-      # "python",
+      # "python_anaconda",
       # "rust",
       #? Terminal
       # "starship",
