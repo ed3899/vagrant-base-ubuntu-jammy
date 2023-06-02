@@ -1,12 +1,11 @@
 # Overview
-This is the base Vagrant image for local development work.
+A Vagrant image for local development work.
 It uses Ubuntu Jammy64, provisions with ansible and
 provides with VirtualBox
 
 # Requirements
-- Make sure you have Vagrant installed on the host machine
-- Enough space on your default drive (see below if you want to change the location where
-  Vagrant stores its boxes and VirtualBox the built VMs)
+- Make sure you have [Vagrant](https://developer.hashicorp.com/vagrant/docs/installation) installed on your host machine
+- Enough space on your default drive. See [Troubleshooting](#troubleshooting)
 
 # How-To
 Before running, make sure to read the following sections.
@@ -19,15 +18,14 @@ in sync with the VM with the following line:
 config.vm.synced_folder "./HOST/FOLDER", "/GUEST/FOLDER", owner: "vagrant", group: "vagrant", create: true
 ```
 
-Be mindful of sharing folder with initialized git repositories. If you decide to fork and make changes to this repository some of those may conflict with children repos.
+Be mindful of sharing folders with initialized git repositories. If you decide to fork and make changes to this repository some of those may conflict with children repos.
 
 Add those to the `.gitignore` file of this repo to avoid conflicting repo issues with the children.
 
 Or you can set them as git sub-modules.
 
-## Tags
-Before running make sure you select the adequate tags
-you wish to run.
+## Select tags
+Before running make sure you select the tags you wish to run.
 
 On the `Vagrantfile`, look for:
 
@@ -35,7 +33,8 @@ On the `Vagrantfile`, look for:
 
 Change that according to the tags you wish to run. Each tag maps to an ansible play. The order you pick doesn't matter.
 
-### AWS
+### Cloud providers
+#### AWS
 If using the `aws` tag.
 
 Create or fill:
@@ -54,11 +53,21 @@ aws:
 
 This file is ignored by git
 
-### Python
-In order to manage multiple python versions add them to `~/ansible/playbooks/programming_languages/python.yml` in the `vars` section. This ensures a stateful presence between provisioning and decommisioning.
+### Programming Languages
 
-Or feel free to add them with the `update-alternatives` command. (Click here for a tutorial)[https://tellor.io/blog/how-to-install-python-3-9-and-venv-on-ubuntu/]
+#### Node.js / Javascript
+Uncomment the `node_js` tag.
 
+It uses [nvm](https://github.com/nvm-sh/nvm) to manage node versions.
+
+#### Python
+Uncomment the `python_anaconda` tag.
+
+The python distro used is [conda](https://docs.conda.io/projects/conda/en/latest/index.html)
+
+Conda manages dependencies and virtual environments.
+
+#### Databases
 ### Postgres
 All postgreSQL tags have the following available users and database:
 
@@ -70,6 +79,7 @@ database: vagrant
 
 For security reasons, if you want to interact with your database from a VSCode extension, make sure you've got a (Private Network)[https://developer.hashicorp.com/vagrant/docs/networking/private_network] on Vagrant between the host and the guest.
 
+#### Version control
 ### GitHub
 If using the `github` tag.
 
