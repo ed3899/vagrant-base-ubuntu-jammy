@@ -35,6 +35,7 @@ Vagrant.configure("2") do |config|
       # "mysql",
       # "pg-15",
       #? Programming languages
+      # "dotnet_sdk",
       # "go",
       # "node_js",
       # "python_anaconda",
