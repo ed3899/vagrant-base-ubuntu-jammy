@@ -1,10 +1,12 @@
 # Overview
 A Vagrant image for local development work.
-It uses Ubuntu Jammy64, provisions with ansible and
+
+It uses Ubuntu Jammy64, provisions with Ansible and
 provides with VirtualBox
 
 # Requirements
-- Make sure you have [Vagrant](https://developer.hashicorp.com/vagrant/docs/installation) installed on your host machine
+- Install [Vagrant](https://developer.hashicorp.com/vagrant/docs/installation)
+- Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - Enough space on your default drive. See [Troubleshooting](#troubleshooting)
 
 # How-To
