@@ -33,6 +33,11 @@
   tags:
   - pg-15
 ## Programming languages
+- name: Dotnet SDK
+  ansible.builtin.import_playbook: ./programming_languages/dotnet_sdk.yml
+  tags:
+  - dotnet_sdk
+
 - name: Go
   ansible.builtin.import_playbook: ./programming_languages/go.yml
   tags:
