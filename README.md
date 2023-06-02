@@ -67,7 +67,7 @@ The python distro used is [conda](https://docs.conda.io/projects/conda/en/latest
 
 Conda manages dependencies and virtual environments.
 
-#### Databases
+### Databases
 ### Postgres
 All postgreSQL tags have the following available users and database:
 
@@ -79,7 +79,7 @@ database: vagrant
 
 For security reasons, if you want to interact with your database from a VSCode extension, make sure you've got a (Private Network)[https://developer.hashicorp.com/vagrant/docs/networking/private_network] on Vagrant between the host and the guest.
 
-#### Version control
+### Version control
 ### GitHub
 If using the `github` tag.
 
@@ -113,8 +113,7 @@ Or feel free to place here tags you have already ran.
 ## Run
 Once you've made your changes.
 
-Make sure you are at the root of the project where the
-Vagrantfile is located.
+Make sure you are at the root of the project where the Vagrantfile is located.
 
 On your command line:
 
@@ -124,7 +123,7 @@ Once done:
 
 `vagrant ssh`
 
-## Using VS Code Remote SSH Extension
+## Using with VS Code Remote SSH Extension
 Run `vagrant ssh-config > some-file.txt`. This will generate a file with the configuration to run using SSH. Here an example of that file:
 
 ```
