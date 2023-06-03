@@ -50,6 +50,8 @@ provides with VirtualBox
 
 `vagrant up`
 
+If you ran into issues while downloading the box, go to [Troubleshooting](#firewall-issues-while-downloading-the-box)
+
 - Once changes are done:
 
 `vagrant ssh`
@@ -57,6 +59,18 @@ provides with VirtualBox
 - If you picked a new tag after the initial setup, run:
 
 `vagrant provision`
+
+- If for some reason you lose you ssh connection, run:
+
+`vagrant reload`
+
+and try sshing again.
+
+- If you want to reboot the machine a provision again, run:
+
+`vagrant reload --provision`
+
+and try sshing again.
 
 # Share folders
 On the `Vagrantfile`, make sure you shared the additionals folders you would like to have
