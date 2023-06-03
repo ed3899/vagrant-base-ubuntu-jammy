@@ -5,40 +5,43 @@
 
 # Run
 - Clone this repository:
-
-`git clone https://github.com/ed3899/vagrant-base-ubuntu-jammy <MY_PERSONAL_VM>`
+  ```
+  git clone https://github.com/ed3899/vagrant-base-ubuntu-jammy <MY_PERSONAL_VM>
+  ```
 
 - Create a local branch:
-`git branch -b <MY_LOCAL_BRANCH>`
+  ```
+  git branch -b <MY_LOCAL_BRANCH>
+  ```
 
 - On the `Vagrantfile`, select your tags by uncommenting them (some tags may require additional setup, go to [Tags](#tags)):
 
-```
-    ansible.tags = [
-      #? Cloud providers
-      # "aws",
-      #? Container tools
-      # "docker",
-      # "k8s_tools",
-      # "minikube",
-      #? Dbs
-      # "mysql",
-      # "pg-15",
-      #? Programming languages
-      # "dotnet_sdk",
-      # "go",
-      # "node_js",
-      # "python_anaconda",
-      # "rust",
-      #? Terminal
-      # "starship",
-      #? UI
-      # "gui",
-      #? Vc
-      # "git",
-      # "github",
-    ]
-```
+  ```
+      ansible.tags = [
+        #? Cloud providers
+        # "aws",
+        #? Container tools
+        # "docker",
+        # "k8s_tools",
+        # "minikube",
+        #? Dbs
+        # "mysql",
+        # "pg-15",
+        #? Programming languages
+        # "dotnet_sdk",
+        # "go",
+        # "node_js",
+        # "python_anaconda",
+        # "rust",
+        #? Terminal
+        # "starship",
+        #? UI
+        # "gui",
+        #? Vc
+        # "git",
+        # "github",
+      ]
+  ```
 
 - And run:
 
