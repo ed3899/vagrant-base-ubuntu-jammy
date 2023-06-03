@@ -82,12 +82,18 @@ database: vagrant
 For security reasons, if you want to interact with your database from a VSCode extension, make sure you've got a (Private Network)[https://developer.hashicorp.com/vagrant/docs/networking/private_network] on Vagrant between the host and the guest.
 
 ### Version control
+
+### Git
+If using the `git` tag
+
+Populate `vars/main.yml` with your git username and email.
+
 ### GitHub
 If using the `github` tag.
 
 Create or fill:
 
-`ansible\playbooks\secrets\main.yml`
+`ansible/playbooks/secrets/main.yml`
 
 With values:
 

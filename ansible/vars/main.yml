@@ -1,6 +1,6 @@
 git:
-  username: Eduardo Casanova
-  email: ed.wacc1995@gmail.com
+  username: YOUR_GIT_USERNAME
+  email: YOUR_EMAIL_FOR_GIT
 deb_architecture:
   aarch64: arm64
   x86_64: amd64
