@@ -65,7 +65,7 @@
   ```
   and try sshing again.
 
-- If you want to reboot the machine a provision again, run:
+- If you want to reboot the machine and provision again, run:
   ```
   vagrant reload --provision
   ```
