@@ -1,9 +1,3 @@
-# Overview
-A Vagrant image for local development work.
-
-It uses Ubuntu Jammy64, provisions with Ansible and
-provides with VirtualBox
-
 # Requirements
 - Install [Vagrant](https://developer.hashicorp.com/vagrant/docs/installation).
 - Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
@@ -22,9 +16,9 @@ provides with VirtualBox
 ```
     ansible.tags = [
       #? Cloud providers
-      #"aws",
+      # "aws",
       #? Container tools
-      #"docker",
+      # "docker",
       # "k8s_tools",
       # "minikube",
       #? Dbs
@@ -34,15 +28,15 @@ provides with VirtualBox
       # "dotnet_sdk",
       # "go",
       # "node_js",
-      #"python_anaconda",
+      # "python_anaconda",
       # "rust",
       #? Terminal
-      #"starship",
+      # "starship",
       #? UI
       # "gui",
       #? Vc
-      #"git",
-      #"github",
+      # "git",
+      # "github",
     ]
 ```
 
@@ -52,7 +46,7 @@ provides with VirtualBox
 
 If you ran into issues while downloading the box, go to [Troubleshooting](#firewall-issues-while-downloading-the-box)
 
-- Once changes are done:
+- Once changes are done, ssh into the VM:
 
 `vagrant ssh`
 
