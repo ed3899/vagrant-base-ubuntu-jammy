@@ -27,7 +27,6 @@
   ansible.builtin.import_playbook: ./dbs/mysql.yml
   tags:
   - mysql
-##% PostgreSQL
 - name: PostgreSQL 15
   ansible.builtin.import_playbook: ./dbs/postgreSQL/15/install.yml
   tags:
@@ -37,7 +36,6 @@
   ansible.builtin.import_playbook: ./programming_languages/dotnet_sdk.yml
   tags:
   - dotnet_sdk
-
 - name: Go
   ansible.builtin.import_playbook: ./programming_languages/go.yml
   tags:
