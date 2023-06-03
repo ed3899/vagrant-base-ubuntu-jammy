@@ -15,7 +15,6 @@
   ```
 
 - On the `Vagrantfile`, select your tags by uncommenting them (some tags may require additional setup, go to [Tags](#tags)):
-
   ```
       ansible.tags = [
         #? Cloud providers
@@ -44,30 +43,33 @@
   ```
 
 - And run:
+  ```
+  vagrant up
+  ```
 
-`vagrant up`
-
-If you ran into issues while downloading the box, go to [Troubleshooting](#firewall-issues-while-downloading-the-box)
+  If you ran into issues while downloading the box, go to [Troubleshooting](#firewall-issues-while-downloading-the-box)
 
 - Once changes are done, ssh into the VM:
+  ```
+  vagrant ssh
+  ```
 
-`vagrant ssh`
-
-- If you picked a new tag after the initial setup, run:
-
-`vagrant provision`
+- If you've picked a new tag after the initial provisioning, run:
+  ```
+  vagrant provision
+  ```
 
 - If for some reason you lose you ssh connection, run:
-
-`vagrant reload`
-
-and try sshing again.
+  ```
+  vagrant reload
+  ```
+  and try sshing again.
 
 - If you want to reboot the machine a provision again, run:
-
-`vagrant reload --provision`
-
-and try sshing again.
+  ```
+  vagrant reload --provision
+  ```
+  and try sshing again.
 
 # Share folders
 On the `Vagrantfile`, make sure you shared the additionals folders you would like to have
