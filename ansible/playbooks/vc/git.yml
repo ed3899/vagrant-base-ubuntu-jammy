@@ -20,6 +20,11 @@
         value: "{{ item.value }}"
       loop:
         - {
+            name: "push.autoSetupRemote",
+            scope: system,
+            value: true
+          }
+        - {
             name: "user.name",
             scope: "system",
             value: "{{ git.username }}"
