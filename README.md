@@ -5,14 +5,61 @@ It uses Ubuntu Jammy64, provisions with Ansible and
 provides with VirtualBox
 
 # Requirements
-- Install [Vagrant](https://developer.hashicorp.com/vagrant/docs/installation)
-- Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-- Enough space on your default drive. See [Troubleshooting](#troubleshooting)
+- Install [Vagrant](https://developer.hashicorp.com/vagrant/docs/installation).
+- Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+- Make sure to have enough space on your default drive. Go to [Troubleshooting](#troubleshooting) for changing the default location where Vagrant and VirtualBox store its data.
 
-# How-To
-Before running, make sure to read the following sections.
-## Share folders
-Make sure you shared the additionals folders you would like to have
+# Run
+Clone this repository:
+
+`git clone https://github.com/ed3899/vagrant-base-ubuntu-jammy <MY_PERSONAL_VM>`
+
+Create a local branch:
+`git branch -b <MY_LOCAL_BRANCH>`
+
+On the `Vagrantfile`, select your tags by uncommenting them (some tags may require additional setup, go to [Tags](#tags)):
+
+```
+    ansible.tags = [
+      #? Cloud providers
+      #"aws",
+      #? Container tools
+      #"docker",
+      # "k8s_tools",
+      # "minikube",
+      #? Dbs
+      # "mysql",
+      # "pg-15",
+      #? Programming languages
+      # "dotnet_sdk",
+      # "go",
+      # "node_js",
+      #"python_anaconda",
+      # "rust",
+      #? Terminal
+      #"starship",
+      #? UI
+      # "gui",
+      #? Vc
+      #"git",
+      #"github",
+    ]
+```
+
+And run:
+
+`vagrant up`
+
+Once changes are done:
+
+`vagrant ssh`
+
+If you want to run additional changes after the initial setup (i.e picking a new tag):
+
+`vagrant provision`
+
+# Share folders
+On the `Vagrantfile`, make sure you shared the additionals folders you would like to have
 in sync with the VM with the following line:
 
 
@@ -26,7 +73,7 @@ Add those to the `.gitignore` file of this repo to avoid conflicting repo issues
 
 Or you can set them as git sub-modules.
 
-## Select tags
+# Tags
 Before running make sure you select the tags you wish to run.
 
 On the `Vagrantfile`, look for:
@@ -35,8 +82,8 @@ On the `Vagrantfile`, look for:
 
 Change that according to the tags you wish to run. Each tag maps to an ansible play. The order you pick doesn't matter.
 
-### Cloud providers
-#### AWS
+## Cloud providers
+### AWS
 If using the `aws` tag.
 
 Create or fill:
@@ -55,22 +102,22 @@ aws:
 
 This file is ignored by git
 
-### Programming Languages
+## Programming Languages
 
-#### Node.js / Javascript
+### Node.js / Javascript
 Uncomment the `node_js` tag.
 
 It uses [nvm](https://github.com/nvm-sh/nvm) to manage node versions.
 
-#### Python
+### Python
 Uncomment the `python_anaconda` tag.
 
 The python distro used is [conda](https://docs.conda.io/projects/conda/en/latest/index.html)
 
 Conda manages dependencies and virtual environments.
 
-### Databases
-### Postgres
+## Databases
+## Postgres
 All postgreSQL tags have the following available users and database:
 
 ```
@@ -81,14 +128,21 @@ database: vagrant
 
 For security reasons, if you want to interact with your database from a VSCode extension, make sure you've got a (Private Network)[https://developer.hashicorp.com/vagrant/docs/networking/private_network] on Vagrant between the host and the guest.
 
-### Version control
+## Version control
 
-### Git
+## Git
 If using the `git` tag
 
 Populate `vars/main.yml` with your git username and email.
 
-### GitHub
+```
+git:
+  username: YOUR_GIT_USERNAME
+  email: YOUR_EMAIL_FOR_GIT
+
+```
+
+## GitHub
 If using the `github` tag.
 
 Create or fill:
@@ -111,25 +165,12 @@ Make sure to give the right permissions to the token as well (i.e "repo", "admin
 
 [GitHub_Personal_Access_Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
-## Skip Tags
+# Skip Tags
 
-### Always, Init
+## Always, Init
 Comment these out if you would like to test quick changes without running base setup again.
 
 Or feel free to place here tags you have already ran.
-
-## Run
-Once you've made your changes.
-
-Make sure you are at the root of the project where the Vagrantfile is located.
-
-On your command line:
-
-`vagrant up`
-
-Once done:
-
-`vagrant ssh`
 
 ## Using with VS Code Remote SSH Extension
 Run `vagrant ssh-config > some-file.txt`. This will generate a file with the configuration to run using SSH. Here an example of that file:
