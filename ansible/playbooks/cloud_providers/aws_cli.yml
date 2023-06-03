@@ -34,7 +34,7 @@
         create: true
         owner: vagrant
         group: vagrant
-        mode: 0666
+        mode: "0666"
         line: "{{ item }}"
       loop:
         - "[default]"
@@ -48,7 +48,7 @@
         create: true
         owner: vagrant
         group: vagrant
-        mode: 0666
+        mode: "0666"
         line: "{{ item }}"
       loop:
         - "[default]"
