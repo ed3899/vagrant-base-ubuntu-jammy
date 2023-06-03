@@ -10,14 +10,14 @@ provides with VirtualBox
 - Make sure to have enough space on your default drive. Go to [Troubleshooting](#troubleshooting) for changing the default location where Vagrant and VirtualBox store its data.
 
 # Run
-Clone this repository:
+- Clone this repository:
 
 `git clone https://github.com/ed3899/vagrant-base-ubuntu-jammy <MY_PERSONAL_VM>`
 
-Create a local branch:
+- Create a local branch:
 `git branch -b <MY_LOCAL_BRANCH>`
 
-On the `Vagrantfile`, select your tags by uncommenting them (some tags may require additional setup, go to [Tags](#tags)):
+- On the `Vagrantfile`, select your tags by uncommenting them (some tags may require additional setup, go to [Tags](#tags)):
 
 ```
     ansible.tags = [
@@ -46,15 +46,15 @@ On the `Vagrantfile`, select your tags by uncommenting them (some tags may requi
     ]
 ```
 
-And run:
+- And run:
 
 `vagrant up`
 
-Once changes are done:
+- Once changes are done:
 
 `vagrant ssh`
 
-If you want to run additional changes after the initial setup (i.e picking a new tag):
+- If you picked a new tag after the initial setup, run:
 
 `vagrant provision`
 
