@@ -145,7 +145,7 @@ password: postgres
 database: vagrant
 ```
 
-For security reasons, if you want to interact with your database from a VSCode extension, make sure you've got a (Private Network)[https://developer.hashicorp.com/vagrant/docs/networking/private_network] on Vagrant between the host and the guest.
+If you want to interact with your database from a VSCode extension, make sure you've got a [Private Network](https://developer.hashicorp.com/vagrant/docs/networking/private_network) on Vagrant between the host and the guest.
 
 ## Version control
 
