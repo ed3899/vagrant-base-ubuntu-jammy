@@ -254,3 +254,15 @@ Select the dropdown **Default Machine Folder** and choose your
 custom location
 
 This is important if you have limited space on your default hard drive.
+
+### Cannot detect my Python environments in VS Code once connected with the Remote SSH extension
+Look for you remote SSH `settings.json`
+
+Add the following:
+
+```
+{
+  "python.venvFolders": ["/anaconda3/envs"],
+  "python.condaPath": "/anaconda3/condabin/conda"
+}
+```
