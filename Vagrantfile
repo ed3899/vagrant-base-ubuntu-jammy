@@ -5,6 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.post_up_message = "Ubuntu Jammy64 up and ready"
   # Sharing this folder is required as per provisioning via ansible locally
   config.vm.synced_folder "./ansible", "/ansible", owner: "vagrant", group: "vagrant"
+  config.vm.synced_folder "./assets", "/assets", owner: "vagrant", group: "vagrant"
 
   config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: true
   config.vm.usable_port_range = 8000..8999
