@@ -42,6 +42,8 @@
       ]
   ```
 
+Change that according to the tags you wish to run. Each tag maps to an ansible play. The order you pick doesn't matter.
+
 - And run:
   ```
   vagrant up
@@ -80,21 +82,25 @@ in sync with the VM with the following line:
 config.vm.synced_folder "./HOST/FOLDER", "/GUEST/FOLDER", owner: "vagrant", group: "vagrant", create: true
 ```
 
+By default the `ansible` and `assets` folders are shared.
+
+The first one is needed for provisioning while the latter is for resources you would like to share with your VM, place those in there anytime, no need to reload (i.e images, csv, etc).
+
+This is useful if you decide to SSH via VS Code Remote SSH Extension or another method (see [Using with VS Code Remote SSH Extension](#using-with-vs-code-remote-ssh-extension))
+
 Be mindful of sharing folders with initialized git repositories. If you decide to fork and make changes to this repository some of those may conflict with children repos.
 
 Add those to the `.gitignore` file of this repo to avoid conflicting repo issues with the children.
 
 Or you can set them as git sub-modules.
 
+Once done, reload the vm for the changes to take effect:
+
+```
+vagrant reload
+```
+
 # Tags
-Before running make sure you select the tags you wish to run.
-
-On the `Vagrantfile`, look for:
-
-`ansible.tags = ["tag_of_the_play"]`
-
-Change that according to the tags you wish to run. Each tag maps to an ansible play. The order you pick doesn't matter.
-
 ## Cloud providers
 ### AWS
 If using the `aws` tag.
