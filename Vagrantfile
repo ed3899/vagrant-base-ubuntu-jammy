@@ -28,16 +28,17 @@ Vagrant.configure("2") do |config|
     ansible.tags = [
       #? Cloud providers
       # "aws",
-      #? Container tools
+      #? Containerization
       # "docker",
-      "helm",
-      # "k8s_tools",
-      # "minikube",
       #? Dbs
       # "mysql",
       # "pg-15",
       #? IaC
       # "pulumi",
+      #? Orchestration
+      # "helm",
+      # "kubectl",
+      # "minikube",
       #? Programming languages
       # "dotnet_sdk",
       # "go",

@@ -1,4 +1,4 @@
-- name: K8s tools
+- name: Kubectl
   hosts: all
   become: true
   tasks:

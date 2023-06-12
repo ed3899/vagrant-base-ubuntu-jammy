@@ -9,23 +9,11 @@
   ansible.builtin.import_playbook: ./cloud_providers/aws_cli.yml
   tags:
   - aws
-## Container tools
+## Containerization
 - name: Docker
-  ansible.builtin.import_playbook: ./container_tools/docker.yml
+  ansible.builtin.import_playbook: ./containerization/docker.yml
   tags:
   - docker
-- name: Helm
-  ansible.builtin.import_playbook: ./container_tools/helm.yml
-  tags:
-  - helm
-- name: K8s tools
-  ansible.builtin.import_playbook: ./container_tools/k8s_tools.yml
-  tags:
-  - k8s_tools
-- name: Minikube
-  ansible.builtin.import_playbook: ./container_tools/minikube.yml
-  tags:
-  - minikube
 ## Dbs
 - name: MySQL
   ansible.builtin.import_playbook: ./dbs/mysql.yml
@@ -40,6 +28,19 @@
   ansible.builtin.import_playbook: ./iac/pulumi.yml
   tags:
   - pulumi
+## Orchestration
+- name: Helm
+  ansible.builtin.import_playbook: ./orchestration/helm.yml
+  tags:
+  - helm
+- name: K8s tools
+  ansible.builtin.import_playbook: ./orchestration/kubectl.yml
+  tags:
+  - kubectl
+- name: Minikube
+  ansible.builtin.import_playbook: ./orchestration/minikube.yml
+  tags:
+  - minikube
 ## Programming languages
 - name: Dotnet SDK
   ansible.builtin.import_playbook: ./programming_languages/dotnet_sdk.yml
