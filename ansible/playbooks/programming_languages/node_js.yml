@@ -21,7 +21,9 @@
       become: true
       become_user: root
       ansible.builtin.blockinfile:
-        path: /etc/profile.d/
+        path: /etc/profile.d/nvm-autoload.sh
+        create: true
+        backup: true
         block: |
           if [ -f ~/.nvm/nvm.sh ]; then
               source ~/.nvm/nvm.sh
