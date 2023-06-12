@@ -30,6 +30,7 @@ Vagrant.configure("2") do |config|
       # "aws",
       #? Container tools
       # "docker",
+      "helm",
       # "k8s_tools",
       # "minikube",
       #? Dbs
