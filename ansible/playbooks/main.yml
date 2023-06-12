@@ -31,6 +31,11 @@
   ansible.builtin.import_playbook: ./dbs/postgreSQL/15/install.yml
   tags:
   - pg-15
+## IaC
+- name: Pulumi
+  ansible.builtin.import_playbook: ./iac/pulumi.yml
+  tags:
+  - pulumi
 ## Programming languages
 - name: Dotnet SDK
   ansible.builtin.import_playbook: ./programming_languages/dotnet_sdk.yml

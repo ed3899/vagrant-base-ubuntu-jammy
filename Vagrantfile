@@ -35,6 +35,8 @@ Vagrant.configure("2") do |config|
       #? Dbs
       # "mysql",
       # "pg-15",
+      #? IaC
+      # "pulumi",
       #? Programming languages
       # "dotnet_sdk",
       # "go",
