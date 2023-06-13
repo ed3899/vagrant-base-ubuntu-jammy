@@ -37,6 +37,7 @@ Vagrant.configure("2") do |config|
       # "pulumi",
       #? Orchestration
       # "helm",
+      # "kind",
       # "kubectl",
       # "minikube",
       #? Programming languages

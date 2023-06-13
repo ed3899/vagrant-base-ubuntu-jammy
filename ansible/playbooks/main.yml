@@ -33,10 +33,14 @@
   ansible.builtin.import_playbook: ./orchestration/helm.yml
   tags:
   - helm
-- name: K8s tools
+- name: Kubectl
   ansible.builtin.import_playbook: ./orchestration/kubectl.yml
   tags:
   - kubectl
+- name: Kind
+  ansible.builtin.import_playbook: ./orchestration/kind.yml
+  tags:
+  - kind
 - name: Minikube
   ansible.builtin.import_playbook: ./orchestration/minikube.yml
   tags:
