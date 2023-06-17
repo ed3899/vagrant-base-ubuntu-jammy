@@ -16,30 +16,35 @@
 
 - On the `Vagrantfile`, select your tags by uncommenting them (some tags may require additional setup, go to [Tags](#tags)):
   ```
-      ansible.tags = [
-        #? Cloud providers
-        # "aws",
-        #? Container tools
-        # "docker",
-        # "k8s_tools",
-        # "minikube",
-        #? Dbs
-        # "mysql",
-        # "pg-15",
-        #? Programming languages
-        # "dotnet_sdk",
-        # "go",
-        # "node_js",
-        # "python_anaconda",
-        # "rust",
-        #? Terminal
-        # "starship",
-        #? UI
-        # "gui",
-        #? Vc
-        # "git",
-        # "github",
-      ]
+    ansible.tags = [
+      #? Cloud providers
+      # "aws",
+      #? Containerization
+      # "docker",
+      #? Dbs
+      # "mysql",
+      # "pg-15",
+      #? IaC
+      # "pulumi",
+      #? Orchestration
+      # "helm",
+      # "kind",
+      # "kubectl",
+      # "minikube",
+      #? Programming languages
+      # "dotnet_sdk",
+      # "go",
+      # "node_js",
+      # "python_anaconda",
+      # "rust",
+      #? Terminal
+      # "starship",
+      #? UI
+      # "gui",
+      #? Vc
+      # "git",
+      # "github",
+    ]
   ```
 
 Change that according to the tags you wish to run. Each tag maps to an ansible play. The order you pick doesn't matter.
@@ -101,6 +106,8 @@ vagrant reload
 ```
 
 # Tags
+In order to install tools, uncomment the choosen tag
+
 ## Cloud providers
 ### AWS
 If using the `aws` tag.
@@ -121,8 +128,36 @@ aws:
 
 This file is ignored by git
 
-## Programming Languages
+### Containerization
+### Docker
+If using with [VS Code remote extension](#using-with-vs-code-remote-ssh-extension) an extension like [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) can help you manage your containers from the VS Code IDE.
 
+## Databases
+If using with [VS Code remote extension](#using-with-vs-code-remote-ssh-extension) an extension like [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools) can help you manage your tables and databases, you can pick multiple drivers.
+## MySQL
+The MySQL database has the following credentials:
+
+```
+user: root
+password: my-secret-pw
+
+user: vagrant
+password: my-secret-pw
+```
+
+If you want to interact with your database from a VSCode extension, make sure you've got a [Private Network](https://developer.hashicorp.com/vagrant/docs/networking/private_network) on Vagrant between the host and the guest.
+## Postgres
+All postgreSQL tags have the following available users and database:
+
+```
+user: postgres
+password: postgres
+database: vagrant
+```
+
+If you want to interact with your database from a VSCode extension, make sure you've got a [Private Network](https://developer.hashicorp.com/vagrant/docs/networking/private_network) on Vagrant between the host and the guest.
+
+## Programming Languages
 ### Node.js / Javascript
 Uncomment the `node_js` tag.
 
@@ -134,18 +169,6 @@ Uncomment the `python_anaconda` tag.
 The python distro used is [conda](https://docs.conda.io/projects/conda/en/latest/index.html)
 
 Conda manages dependencies and virtual environments.
-
-## Databases
-## Postgres
-All postgreSQL tags have the following available users and database:
-
-```
-user: postgres
-password: postgres
-database: vagrant
-```
-
-If you want to interact with your database from a VSCode extension, make sure you've got a [Private Network](https://developer.hashicorp.com/vagrant/docs/networking/private_network) on Vagrant between the host and the guest.
 
 ## Version control
 
