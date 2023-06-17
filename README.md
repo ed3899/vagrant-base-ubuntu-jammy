@@ -89,7 +89,7 @@ By default the `ansible` and `assets` folders are shared.
 
 The first one is needed for provisioning while the latter is for resources you would like to share with your VM, place those in there anytime, no need to reload (i.e images, csv, etc).
 
-This is useful if you decide to SSH via VS Code Remote SSH Extension or another method (see [Using with VS Code Remote SSH Extension](#using-with-vs-code-remote-ssh-extension))
+This is useful if you decide to SSH via VS Code Remote SSH Extension or another method (see [Using with VS Code Remote SSH Extension](#how-to-use-with-vs-code-remote-ssh-extension))
 
 Be mindful of sharing folders with initialized git repositories. If you decide to fork and make changes to this repository some of those may conflict with children repos.
 
@@ -125,9 +125,9 @@ aws:
 This file is ignored by git
 ## Containerization
 ### Docker
-If using with [VS Code remote extension](#using-with-vs-code-remote-ssh-extension) an extension like [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) can help you manage your containers from the VS Code IDE.
+If using with [VS Code remote extension](#how-to-use-with-vs-code-remote-ssh-extension) an extension like [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) can help you manage your containers from the VS Code IDE.
 ## Databases
-If using with [VS Code remote extension](#using-with-vs-code-remote-ssh-extension) an extension like [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools) can help you manage your tables and databases, you can pick multiple drivers.
+If using with [VS Code remote extension](#how-to-use-with-vs-code-remote-ssh-extension) an extension like [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools) can help you manage your tables and databases, you can pick multiple drivers.
 ### MySQL
 The MySQL database has the following credentials:
 
@@ -244,7 +244,7 @@ Comment these out if you would like to test quick changes without running base s
 
 Or feel free to place here tags you have already ran.
 ## FAQ
-### Using with VS Code Remote SSH Extension
+### How to use with VS Code Remote SSH Extension?
 Run `vagrant ssh-config > some-file.txt`. This will generate a file with the configuration to run using SSH. Here an example of that file:
 
 ```
@@ -293,19 +293,7 @@ As of now the maximum size for a VM is 40GB but this can be easily changed via t
 If you find yourself needing additional tools and working with multiple of them at the same time you could try using the `docker` tag instead and use their containerized versions and perhaps work with the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
 
 It's up to your judgement.
-### I lose my SSH connection when I run some tools (i.e conda, minikube, etc)
-This is often caused by an excessive usage of CPU resources by the VM as seen when using the `top` command.
-
-Increase the available memory and cpus assigned to the VM on the `Vagrantfile`:
-
-```
-  config.vm.provider "virtualbox" do |vb|
-    vb.name = "ubuntu_jammy64_dev"
-    vb.memory = "4096"
-    vb.cpus = "4"
-  end
-```
-### Some tools don't acomplish all my needs for customization
+### Some tools don't acomplish all my needs for customization. How do I make changes to them?
 You've got two options here.
 1. Make your changes local and save them via a snapshot
 2. Declare them via Ansible. All the playbooks are listed under `ansible/playbooks`.
@@ -362,4 +350,16 @@ Add the following:
   "python.venvFolders": ["/anaconda3/envs"],
   "python.condaPath": "/anaconda3/condabin/conda"
 }
+```
+### I lose my SSH connection when I run some tools (i.e conda, minikube, etc)
+This is often caused by an excessive usage of CPU resources by the VM as seen when using the `top` command.
+
+Increase the available memory and cpus assigned to the VM on the `Vagrantfile`:
+
+```
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "ubuntu_jammy64_dev"
+    vb.memory = "4096"
+    vb.cpus = "4"
+  end
 ```
