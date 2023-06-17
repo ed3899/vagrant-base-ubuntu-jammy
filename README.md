@@ -128,7 +128,7 @@ This file is ignored by git
 If using with [VS Code remote extension](#using-with-vs-code-remote-ssh-extension) an extension like [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) can help you manage your containers from the VS Code IDE.
 ## Databases
 If using with [VS Code remote extension](#using-with-vs-code-remote-ssh-extension) an extension like [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools) can help you manage your tables and databases, you can pick multiple drivers.
-## MySQL
+### MySQL
 The MySQL database has the following credentials:
 
 ```
@@ -140,7 +140,7 @@ password: my-secret-pw
 ```
 
 If you want to interact with your database from a VSCode extension, make sure you've got a [Private Network](https://developer.hashicorp.com/vagrant/docs/networking/private_network) on Vagrant between the host and the guest.
-## Postgres
+### Postgres
 All postgreSQL tags have the following available users and database:
 
 ```
@@ -237,7 +237,7 @@ Make sure you remove your old keys from GitHub when you destroy your VMs. This i
 
 Make sure to give the right permissions to the token as well (i.e "repo", "admin:public_key" are the minimum). For more granular control consult the docs.
 
-[GitHub_Personal_Access_Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+[More info on GitHub personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 # Skip Tags
 ## Always, Init
 Comment these out if you would like to test quick changes without running base setup again.
