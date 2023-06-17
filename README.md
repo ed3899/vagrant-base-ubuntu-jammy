@@ -107,7 +107,6 @@ vagrant reload
 
 # Tags
 In order to install tools, uncomment the choosen tag
-
 ## Cloud providers
 ### AWS
 If using the `aws` tag.
