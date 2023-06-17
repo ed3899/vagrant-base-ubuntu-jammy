@@ -2,7 +2,6 @@
 - Install [Vagrant](https://developer.hashicorp.com/vagrant/docs/installation).
 - Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
 - Make sure to have enough space on your default drive. Go to [Troubleshooting](#troubleshooting) for changing the default location where Vagrant and VirtualBox store its data.
-
 # Run
 - Clone this repository:
   ```
@@ -77,7 +76,6 @@ Change that according to the tags you wish to run. Each tag maps to an ansible p
   vagrant reload --provision
   ```
   and try sshing again.
-
 # Share folders
 On the `Vagrantfile`, make sure you shared the additionals folders you would like to have
 in sync with the VM with the following line:
@@ -104,9 +102,8 @@ Once done, reload the vm for the changes to take effect:
 ```
 vagrant reload
 ```
-
 # Tags
-In order to install tools, uncomment the choosen tag
+In order to install tools, uncomment the choosen tag.
 ## Cloud providers
 ### AWS
 If using the `aws` tag.
@@ -129,7 +126,6 @@ This file is ignored by git
 ## Containerization
 ### Docker
 If using with [VS Code remote extension](#using-with-vs-code-remote-ssh-extension) an extension like [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) can help you manage your containers from the VS Code IDE.
-
 ## Databases
 If using with [VS Code remote extension](#using-with-vs-code-remote-ssh-extension) an extension like [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools) can help you manage your tables and databases, you can pick multiple drivers.
 ## MySQL
@@ -154,22 +150,61 @@ database: vagrant
 ```
 
 If you want to interact with your database from a VSCode extension, make sure you've got a [Private Network](https://developer.hashicorp.com/vagrant/docs/networking/private_network) on Vagrant between the host and the guest.
+## IaC (Infrastructure as Code)
+### Pulumi
+Uncomment the `pulumi` tag.
 
+For more information go to its [website](https://www.pulumi.com/)
+## Orchestration
+### Helm
+Uncomment the `helm` tag.
+
+For more information go to its [website](https://helm.sh/)
+### Kind
+Uncomment the `kind` tag.
+
+For more information go to its [website](https://kind.sigs.k8s.io/)
+### Kubectl
+Uncomment the `kubectl` tag.
+
+For more information go to its [website](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/)
+### Minikube
+Uncomment the `minikube` tag.
+
+For more information go to its [website](https://minikube.sigs.k8s.io/docs/)
 ## Programming Languages
+### Dotnet
+Uncomment the `dotnet_sdk` tag.
+### Go
+Uncomment the `go` tag.
+
+Look at this [thread](https://stackoverflow.com/a/68087898/11941146) if you want to manage multiple Go version without installing additional tools.
 ### Node.js / Javascript
 Uncomment the `node_js` tag.
 
 It uses [nvm](https://github.com/nvm-sh/nvm) to manage node versions.
-
 ### Python
 Uncomment the `python_anaconda` tag.
 
 The python distro used is [conda](https://docs.conda.io/projects/conda/en/latest/index.html)
 
 Conda manages dependencies and virtual environments.
+### Rust
+Uncomment the `rust` tag.
 
+Installed via rustup-init with a complete profile.
+## Terminal
+### Starship
+Uncomment the `starship` tag.
+
+Minimalistic terminal. For more information go to its [website](https://starship.rs/guide/).
+## UI
+Uncomment the `gui` tag.
+
+It installs `xfce4` under the hood.
+
+Once installed go to VirtualBox and open up a GUI.
 ## Version control
-
 ## Git
 If using the `git` tag
 
@@ -181,7 +216,6 @@ git:
   email: YOUR_EMAIL_FOR_GIT
 
 ```
-
 ## GitHub
 If using the `github` tag.
 
@@ -204,14 +238,11 @@ Make sure you remove your old keys from GitHub when you destroy your VMs. This i
 Make sure to give the right permissions to the token as well (i.e "repo", "admin:public_key" are the minimum). For more granular control consult the docs.
 
 [GitHub_Personal_Access_Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-
 # Skip Tags
-
 ## Always, Init
 Comment these out if you would like to test quick changes without running base setup again.
 
 Or feel free to place here tags you have already ran.
-
 ## Using with VS Code Remote SSH Extension
 Run `vagrant ssh-config > some-file.txt`. This will generate a file with the configuration to run using SSH. Here an example of that file:
 
@@ -239,9 +270,48 @@ Finally, just press again F1 and type Remote-SSH: Connect to Host..., choose the
 You should be able to ssh into the machine.
 
 [Stack OverFlow Source](https://stackoverflow.com/a/62200336/11941146)
+## FAQ
+### Why not containers instead of VMs?
+You could definitely work with containers instead of VMs, if you feel comfortable with that, by all means keep your current workflow.
 
+The reason of why this project was built using Vagrant instead of Docker, was because of the maturity of tools such as Ansible.
+
+You could argue that you could easily install all of the dependencies via a Dockerfile and you'd be correct. Or perhaps built an machine image with Packer or another 3rd party tool.
+
+However, Ansible offers a more declarative approach and more vast ecosystem of utilities for provisioning environments. On top of Vagrant, is the perfect combination for a development environment which is meant to be disposable in case things go wrong. That way, you just simply push your stuff to your repository, reprovision and you're ready to go.
+
+Containers tend to be better when you ship microservices with only the tools it needs.
+
+Machine Images with Packer could work but Vagrant was specifically designed to ship development environments.
+
+In terms of performance both containers and VMs are comparable. Although it depends on your exact requirements (i.e GPU, Boot time)
+### Can I install all the tools?
+As a general recommendation try to install only the tools you need. Even if you could install all of them, that could result in a bloated VM.
+
+As of now the maximum size for a VM is 40GB but this can be easily changed via the `Vagrantfile`. However, it was decided not to do so as it is still an experimental feature.
+
+If you find yourself needing additional tools and working with multiple of them at the same time you could try using the `docker` tag instead and use their containerized versions and perhaps work with the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
+
+It's up to your judgement.
+### I lose my SSH connection when I run some tools (i.e conda, minikube, etc)
+This is often caused by an excessive usage of CPU resources by the VM as seen when using the `top` command.
+
+Increase the available memory and cpus assigned to the VM on the `Vagrantfile`:
+
+```
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "ubuntu_jammy64_dev"
+    vb.memory = "4096"
+    vb.cpus = "4"
+  end
+```
+### Some tools don't acomplish all my needs for customization
+You've got two options here.
+1. Make your changes local and save them via a snapshot
+2. Declare them via Ansible. All the playbooks are listed under `ansible/playbooks`.
+
+If you end up going for option 2 and feel that your change could potentially benefit more people feel free to initiate a pull request. Contributions are welcomed. If possible make sure people can opt-in if they want the feature as not to force them into it.
 ## Troubleshooting
-
 ### Firewall issues while downloading the box
 Please refer to this [thread](https://stackoverflow.com/questions/72290594/unknown-error-0x80092012-trying-to-configure-vagrant-with-git-bash/75837342#75837342) where it is explained in detail.
 
