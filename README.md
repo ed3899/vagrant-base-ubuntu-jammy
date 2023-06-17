@@ -243,7 +243,8 @@ Make sure to give the right permissions to the token as well (i.e "repo", "admin
 Comment these out if you would like to test quick changes without running base setup again.
 
 Or feel free to place here tags you have already ran.
-## Using with VS Code Remote SSH Extension
+## FAQ
+### Using with VS Code Remote SSH Extension
 Run `vagrant ssh-config > some-file.txt`. This will generate a file with the configuration to run using SSH. Here an example of that file:
 
 ```
@@ -270,7 +271,6 @@ Finally, just press again F1 and type Remote-SSH: Connect to Host..., choose the
 You should be able to ssh into the machine.
 
 [Stack OverFlow Source](https://stackoverflow.com/a/62200336/11941146)
-## FAQ
 ### Why not containers instead of VMs?
 You could definitely work with containers instead of VMs, if you feel comfortable with that, by all means keep your current workflow.
 
