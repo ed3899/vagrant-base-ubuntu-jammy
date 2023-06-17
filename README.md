@@ -126,8 +126,7 @@ aws:
 ```
 
 This file is ignored by git
-
-### Containerization
+## Containerization
 ### Docker
 If using with [VS Code remote extension](#using-with-vs-code-remote-ssh-extension) an extension like [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) can help you manage your containers from the VS Code IDE.
 
